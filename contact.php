@@ -6,10 +6,14 @@
     <p>Ces zones sont obligatoires*</p>
     <p style= "color:red;" id ="erreur"></p>
         <h1>Coordonnée</h1>
-        <form action="" method="POST" id= "contact">
-        <div class="form-group">
+        <form action="contact_script" method="POST" id= "contact">
+        <div class="form-group <?php echo !empty($nomError)?'error':'';?>">
             <label for="nom">Nom*</label>                  
-                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" >           
+                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" value="<?php echo !empty($nom)?$nom:'';?>" > 
+                <?php if (!empty($nomError)): ?>
+                                <span class="help-inline"><?php echo $nomError;?></span>
+                            <?php endif; ?>  
+                            
                 <small></small>
         </div>
         <div class="form-group">
@@ -49,12 +53,12 @@
         <h1>Votre demande</h1>
         <div class="form-group">
             <label for="sujet">Sujet</label>
-                <select class="form-control" id="sujet">
-                    <option>Veuillez séléctionner un sujet</option>
-                    <option>L'achat d'un bien</option>
-                    <option>La vente/l'estimation d'un bien</option>
-                    <option>location d'un bien</option>
-                    <option>Autres</option>
+                <select class="form-control" name="sujet" id="sujet">
+                    <option value = "0">Veuillez séléctionner un sujet</option>
+                    <option value = "L'achat d'un bien">L'achat d'un bien</option>
+                    <option value = "La vente/l'estimation d'un bien">La vente/l'estimation d'un bien</option>
+                    <option value = "location d'un bien">location d'un bien</option>
+                    <option value = "Autres">Autres</option>
                 </select>
         </div>
         <div class="form-group">
