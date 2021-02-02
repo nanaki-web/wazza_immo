@@ -1,35 +1,78 @@
 <?php
+    session_start();
     include ("entete.php");
 ?>
+
+<p><span class="error">*remplir tout les champs </span></p>
+<!-- $tErrors -->
+<?php $tErrors = $_SESSION['errors'];?> 
+
 
 <div class="col-12 col-md-12" >
     <p>Ces zones sont obligatoires*</p>
     <p style= "color:red;" id ="erreur"></p>
         <h1>Coordonnée</h1>
         <form action="contact_script" method="POST" id= "contact">
-        <div class="form-group <?php echo !empty($nomError)?'error':'';?>">
+        <div class="form-group 
             <label for="nom">Nom*</label>                  
-                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" value="<?php echo !empty($nom)?$nom:'';?>" > 
-                <?php if (!empty($nomError)): ?>
-                                <span class="help-inline"><?php echo $nomError;?></span>
-                            <?php endif; ?>  
-                            
+                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" value="<?php echo $_SESSION ['nom'] ?? '';?> "> 
+                
+                       
+                        
+                          
+                         <?php 
+                         if (isset($tErrors))
+                         {
+                            if (isset($tErrors ['nom']))
+                            {
+                                 echo "<div class='alert alert-danger'>";
+                                echo $tErrors ['nom'] ;
+                                echo "</div>";
+                                unset($_SESSION['errors']);
+                            }
+                         }
+                         ?>
+                  
                 <small></small>
         </div>
         <div class="form-group">
             <label for="prenom">Prénom*</label>                  
-                <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Veuillez saisir votre prénom" >           
+                <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Veuillez saisir votre prénom" value="<?php echo $_SESSION ['prenom'] ?? '';?> " >
+                <?php 
+                         if (isset($tErrors))
+                         {
+                            if (isset($tErrors ['prenom']))
+                            {
+                                 echo "<div class='alert alert-danger'>";
+                                echo $tErrors ['prenom'] ;
+                                echo "</div>";
+                                unset($_SESSION['errors']);
+                            }
+                         }
+                         ?>
                 <small></small>
         </div>
         <div class="form-group">
             <label for="adresse">Adresse*</label>                  
-                <input type="text" name="adresse" class="form-control" id="adresse" placeholder="Veuillez saisir votre adresse" >           
+                <input type="text" name="adresse" class="form-control" id="adresse" placeholder="Veuillez saisir votre adresse"value="<?php echo $_SESSION ['adresse'] ?? '';?> "  >  
+                <?php
+                if (isset($tErrors))
+                         {
+                            if (isset($tErrors ['adresse']))
+                            {
+                                 echo "<div class='alert alert-danger'>";
+                                echo $tErrors ['adresse'] ;
+                                echo "</div>";
+                                unset($_SESSION['errors']);
+                            }
+                         }
+                         ?>     
                 <small></small>
         </div>
 
         <div class="form-group">
             <label for="postal">Code Postale*</label>                  
-                <input type="text" name="postal" class="form-control" id="postal" placeholder="Veuillez saisir votre code postale" >           
+                <input type="text" name="postal" class="form-control" id="postal" placeholder="Veuillez saisir votre code postale" <?php echo $_SESSION ['code_postale'] ?? '';?> " >           
                 <small></small>
         </div>
 
