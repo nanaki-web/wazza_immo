@@ -16,7 +16,8 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     $adresse=htmlentities(trim($_POST['adresse']));$code_postale=htmlentities(trim($_POST['postal']));
     $ville=htmlentities(trim($_POST['ville']));$telephone=htmlentities(trim($_POST['tel']));
     $email=htmlentities(trim($_POST['email']));$sujet=htmlentities(trim($_POST['sujet']));
-    $question=htmlentities(trim($_POST['question']));
+    $question=htmlentities(trim($_POST['question']));$cgu=htmlentities(trim($_POST['cgu']));
+    var_dump($sujet);
     
     // on vérifie nos champs 
     //On crée notre message d’erreur
@@ -83,19 +84,21 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 
     if (empty($email)) 
     { 
-        $emailError = "S'il vous plaît entrer votre adresse email"; 
+        $errors['email'] = "S'il vous plaît entrer votre adresse email"; 
         $valid = false; 
     } 
     else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
     { 
-        $errors['email'] = 'Please enter a valid Email Address'; 
+        $errors['email'] = "s'il vous plaît, Entrer un email valide"; 
         $valid = false; 
     } 
-
-    if (!isset($sujet)) 
+    var_dump($errors);
+    if ($sujet == "0" )
     { 
-        $errors['sujet'] = 'Please select a country'; 
+        $errors['sujet'] = "s'il vous plait ,choississez une option"; 
+    
         $valid = false; 
+        
     } 
    
 
@@ -103,6 +106,12 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     { 
         $errors['question'] = "S'il vous plaît poser votre question"; 
         $valid = false; 
+    }
+
+    if (empty($cgu))
+    {
+        $errors['cgu'] = "S'il vous plaît ,veuillez accepter le traitement informatique";
+        $valid = false;
     }
     
     
@@ -113,9 +122,13 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         $_SESSION['nom'] = $nom;
         $_SESSION['prenom'] = $prenom;
         $_SESSION['adresse'] = $adresse;
-        $_SESSION['postal'] = $postale;
+        $_SESSION['code_postale'] = $code_postale;
         $_SESSION['ville'] = $ville;
-        
+        $_SESSION['telephone'] = $telephone;
+        $_SESSION['email'] = $email;
+        $_SESSION['sujet'] = $sujet;
+        $_SESSION['question'] = $question;
+        $_SESSION['cgu'] = $cgu;
         header("Location: contact.php");
     }
    else
