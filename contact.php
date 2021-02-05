@@ -12,8 +12,8 @@
     <p>Ces zones sont obligatoires*</p>
     <p style= "color:red;" id ="erreur"></p>
         <h1>Coordonnée</h1>
-        <form action="contact_script" method="POST" id= "contact">
-        <div class="form-group 
+        <form action="contact_script.php" method="POST" id= "contact">
+        <div class="form-group"> 
             <label for="nom">Nom*</label>                  
                 <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" value="<?php echo $_SESSION ['nom'] ?? '';?> "> 
                 
@@ -184,7 +184,9 @@
                 <small></small>
         </div>
         <div class="form-check">
-              <input class="form-check-input" type="checkbox"name="cgu"  id="cgu" value = "cgu"<?php if (isset($_SESSION ['cgu']) && $_SESSION ['cgu'] == "cgu") echo "checked"; ?> >
+              <input class="form-check-input" type="checkbox" name="cgu"  id="cgu" value="cgu<?php if (isset($_SESSION ['cgu']) && $_SESSION ['cgu'] == 'cgu') echo "checked"; ?>">
+              
+              <label class="form-check-label" for="cgu">J'accepte le traitement informatique de ce formulaire</label>
               <?php
               if (isset($tErrors))
                 {
@@ -198,10 +200,7 @@
                 }
                 ?>
               <small></small>
-              <label class="form-check-label" for="cgu">J'accepte le traitement informatique de ce formulaire
-        </div>    
-              </label>
-
+        </div>
               <!-- bouton envoyer/annuler -->
             <diV class ="form-group">   
           <button type="submit" name="envoyer" value="ok" class="btn btn-dark">Envoyer</button>
@@ -214,5 +213,3 @@
 <?php
     include ("pieddepage.php");
 ?>
-
-        

@@ -2,7 +2,7 @@
 require('connexion_bdd.php');
 $db = connexionBase();
 
-if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
+if(!empty($_POST))
 {
     //on initialise nos messages d'erreurs;
 
@@ -11,13 +11,18 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     $errors = [];
     
     // on recupère nos valeurs 
-// var_dump($_POST);
-    $nom=htmlentities(trim($_POST['nom']));$prenom=htmlentities(trim($_POST['prenom']));
-    $adresse=htmlentities(trim($_POST['adresse']));$code_postale=htmlentities(trim($_POST['postal']));
-    $ville=htmlentities(trim($_POST['ville']));$telephone=htmlentities(trim($_POST['tel']));
-    $email=htmlentities(trim($_POST['email']));$sujet=htmlentities(trim($_POST['sujet']));
-    $question=htmlentities(trim($_POST['question']));$cgu=htmlentities(trim($_POST['cgu']));
-    var_dump($sujet);
+var_dump($_POST);
+    $nom=htmlentities(trim($_POST['nom']));
+    $prenom=htmlentities(trim($_POST['prenom']));
+    $adresse=htmlentities(trim($_POST['adresse']));
+    $code_postale=htmlentities(trim($_POST['postal']));
+    $ville=htmlentities(trim($_POST['ville']));
+    $telephone=htmlentities(trim($_POST['tel']));
+    $email=htmlentities(trim($_POST['email']));
+    $sujet=htmlentities(trim($_POST['sujet']));
+    $question=htmlentities(trim($_POST['question']));
+    $cgu=  htmlentities(trim($_POST['cgu']));
+    
     
     // on vérifie nos champs 
     //On crée notre message d’erreur
@@ -77,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         $errors['telephone'] = "s'il vous plait ,entrer votre numéro de téléphone"; 
         $valid = false; 
     }
-    else if (!preg_match("#^0[1-68]([-. ]?[0-9]{2}){4}$#",$telephone)) 
+    else if (!preg_match("/^0[1-68]([-. ]?[0-9]{2}){4}$/",$telephone)) 
     { 
         $errors['telephone'] = "s'il vous plaît, Entrer un téléphone valide"; 
     }
@@ -149,23 +154,6 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
    
         
 }  
-    // si les données sont présentes et bonnes, on se connecte à la base*
-
-    
-//     else{
-//         header("Location: contact.php");
-//     }
-// }
-
-
-
-
-
-
-
-
-
-// var_dump($_POST);
 
 
 

@@ -1,3 +1,6 @@
+<?php
+  // require("function.php");
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,9 +16,9 @@
 <body>
 <div class="container-fluid">
   <!-- navigation-->
-   <!-- Image and text -->
-   
-   <nav class="navbar-expand-md navbar-dark bg-dark">
+  <!-- Image and text -->
+  
+  <nav class="navbar-expand-md navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
         <img src="annexes/wazaa_logo.png" width="40" height="40" class="d-inline-block align-top " alt="" loading="lazy">
         Wazaa Immo
@@ -34,8 +37,11 @@
             <li class="nav-item ">
               <a class="nav-link" href="apropos.php">A propos de nous </a>
             </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="enregistrer.php">S'inscrire </a>
+            </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
         </ul>
       </div>
