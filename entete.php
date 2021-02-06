@@ -41,6 +41,10 @@
               <a class="nav-link" href="enregistrer.php">S'inscrire </a>
             </li>
             <li class="nav-item">
+            <li class="nav-item ">
+              <a class="nav-link" href="connection.php">Se connecter </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
         </ul>

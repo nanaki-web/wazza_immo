@@ -6,12 +6,10 @@ if(!empty($_POST))
 {
     //on initialise nos messages d'erreurs;
 
-    // $nomError = '';$prenomError = '';$adresseError ='';$code_postaleError = '';$villeError = ''; $telephoneError = '';
-    // $emailError = '' ;$sujetError = '';$question = '' ;
     $errors = [];
     
     // on recupère nos valeurs 
-var_dump($_POST);
+// var_dump($_POST);
     $nom=htmlentities(trim($_POST['nom']));
     $prenom=htmlentities(trim($_POST['prenom']));
     $adresse=htmlentities(trim($_POST['adresse']));

@@ -1,7 +1,7 @@
 <?php
 require('connexion_bdd.php');
 $db = connexionBase();
-require("function.php");
+require_once("function.php");
 
 if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 {
@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     $vNom =htmlentities(trim($_POST['nom'])); $vPrenom =htmlentities(trim($_POST['prenom']));
     $vEmail =htmlentities(trim($_POST['email']));$vMdp =htmlentities(trim($_POST['mdp']));
     $vMdpConfirmer =htmlentities(trim($_POST['mdpConfirmer']));
-
+    $compte =  [];
     if(empty($vNom) || !preg_match('/^[a-zA-Z-]+$/',$vNom))
     {
         $errors['cNom']="Vous n'avez pas entrer de nom";
@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     else
     {
         //verification du nom qu'il apparait une seule fois dans la base de donnée
-        $pdoStat = $db -> prepare ('SELECT id FROM utilisateurs WHERE nom = :nom');
+        $pdoStat = $db -> prepare ('SELECT id FROM utilisateurs WHERE nom = ?');
         $pdoStat->execute([$vNom]);
         //fetch permet de recuperer le premier enrregistrement (celui de utilisateurs )
         $utilisateur = $pdoStat->fetch();
@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     }
     else
     {
-        //verification du nom qu'il apparait une seule fois dans la base de donnée
+        //verification du email qu'il apparait une seule fois dans la base de donnée
         $pdoStat = $db -> prepare ('SELECT id FROM utilisateurs WHERE email = ? ');
         $pdoStat->execute([$vEmail]);
         //fetch permet de recuperer le premier enrregistrement (celui de utilisateurs )
@@ -62,15 +62,32 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     {
         session_start();
         $_SESSION['errors'] = $errors;
-    }  
-    if(empty($errors))
+        header("location:enregistrer.php");
+    } 
+    else
     {
-        $pdoStat = $db -> prepare ("INSERT INTO utilisateurs (nom,prenom,email,motDePasse)
-                                    VALUES (?,?,?,?)");
-        //hacher le mot de passe dans la base de donner
-        $scriptageMdp = password_hash($vMdp,PASSWORD_BCRYPT);
-        $pdoStat->execute(array($vNom,$vPrenom,$vEmail,$scriptageMdp));
-        die('Notre compte a bien été créé');
-    }
+        if(empty($errors))
+        {
+            $pdoStat = $db -> prepare ("INSERT INTO utilisateurs (nom,prenom,email,motDePasse,confirmation_token)
+                                        VALUES (?,?,?,?,?)");
+            //hacher le mot de passe dans la base de donner
+            $scriptageMdp = password_hash($vMdp,PASSWORD_BCRYPT);
+            $token = str_random(60);
+            // debug($token);
+            // die;
+            $pdoStat->execute(array($vNom,$vPrenom,$vEmail,$scriptageMdp,$token));
+            //nous renvoie le dernier id entrer
+            $utilisateur_id = $db->lastInsertId();
+            mail($email,'confirmation de votre compte',"enfin de valider votre compte,merci de cliquez sur ce lien\n\nhttp://wazaaimmo/enregistrerScript.php?id=$utilisateur_id&token=$token");
+            header('location:enregistrer.php');
+            exit();
+            // session_start();
+            // $compte['compte'] = die('Notre compte a bien été créé');
+            // $_SESSION['compte'] = $compte;
+           
+            
+        }
+    } 
+    
     
 }
