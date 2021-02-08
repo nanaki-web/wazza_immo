@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <title>Accueil</title>
+    <title>Wazza immo</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -40,9 +40,11 @@
             <li class="nav-item ">
               <a class="nav-link" href="enregistrer.php">S'inscrire </a>
             </li>
-            <li class="nav-item">
             <li class="nav-item ">
               <a class="nav-link" href="connection.php">Se connecter </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="clients.php">La liste des clients  </a>
             </li>
             <li class="nav-item">
               <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Disabled</a>

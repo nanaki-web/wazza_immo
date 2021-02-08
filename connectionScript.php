@@ -11,7 +11,9 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     $mdp = htmlentities(trim($_POST['mdpconnect']));
     if(!empty($nom) AND !empty($prenom) AND !empty($email) AND !empty($mdp))
     {
-        $requser = $db -> prepare ("SELECT * FROM Utilisateurs WHERE nom= ? AND prenom=? AND email = ? AND motDePasse = ?");
+        $requser = $db -> prepare ("SELECT * 
+                                    FROM Utilisateurs 
+                                    WHERE nom= ? AND prenom=? AND email = ? AND motDePasse = ?");
         $requser ->execute(array($nom,$prenom,$email,$mdp));
         //compter le nombre de ligne 
         $userexist = $requser -> rowCount();

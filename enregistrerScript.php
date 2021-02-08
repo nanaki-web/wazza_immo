@@ -6,10 +6,12 @@ require_once("function.php");
 if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 {
     $errors = [];
-    $vNom =htmlentities(trim($_POST['nom'])); $vPrenom =htmlentities(trim($_POST['prenom']));
-    $vEmail =htmlentities(trim($_POST['email']));$vMdp =htmlentities(trim($_POST['mdp']));
+    $vNom =htmlentities(trim($_POST['nom'])); 
+    $vPrenom =htmlentities(trim($_POST['prenom']));
+    $vEmail =htmlentities(trim($_POST['email']));
+    $vMdp =htmlentities(trim($_POST['mdp']));
     $vMdpConfirmer =htmlentities(trim($_POST['mdpConfirmer']));
-    $compte =  [];
+    // $compte =  [];
     if(empty($vNom) || !preg_match('/^[a-zA-Z-]+$/',$vNom))
     {
         $errors['cNom']="Vous n'avez pas entrer de nom";
@@ -78,11 +80,12 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
             $pdoStat->execute(array($vNom,$vPrenom,$vEmail,$scriptageMdp,$token));
             //nous renvoie le dernier id entrer
             $utilisateur_id = $db->lastInsertId();
-            mail($email,'confirmation de votre compte',"enfin de valider votre compte,merci de cliquez sur ce lien\n\nhttp://wazaaimmo/enregistrerScript.php?id=$utilisateur_id&token=$token");
-            header('location:enregistrer.php');
-            exit();
+            // mail($email,'confirmation de votre compte',"enfin de valider votre compte,merci de cliquez sur ce lien\n\nhttp://wazaaimmo/enregistrerScript.php?id=$utilisateur_id&token=$token");
+            // header('location:enregistrer.php');
+            // exit('Notre compte a bien été créé');
             // session_start();
-            // $compte['compte'] = die('Notre compte a bien été créé');
+            // $compte['compte'] = 
+            die('Notre compte a bien été créé');
             // $_SESSION['compte'] = $compte;
            
             

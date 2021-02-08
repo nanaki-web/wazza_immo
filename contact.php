@@ -15,7 +15,7 @@
         <form action="contact_script.php" method="POST" id= "contact">
         <div class="form-group"> 
             <label for="nom">Nom*</label>                  
-                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" value="<?php echo $_SESSION ['nom'] ?? '';?> "> 
+                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir votre nom" value="<?php echo $_SESSION ['nom'] ?? '';unset($_SESSION['nom']);?> "> 
                 
                          <?php 
                          if (isset($tErrors))
@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
             <label for="prenom">Prénom*</label>                  
-                <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Veuillez saisir votre prénom" value="<?php echo $_SESSION ['prenom'] ?? '';?> " >
+                <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Veuillez saisir votre prénom" value="<?php echo $_SESSION ['prenom'] ?? '';unset($_SESSION['prenom']);?> " >
                 <?php 
                          if (isset($tErrors))
                          {
