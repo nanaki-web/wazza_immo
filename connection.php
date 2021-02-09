@@ -12,14 +12,14 @@ if(array_key_exists('errors',$_SESSION)):?>
 <?php unset($_SESSION['errors']); endif;?>
 
 <form action="connectionScript.php" method ="POST">
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="">Nom</label>
         <input type="text" name="nomconnect" class="form-control">
     </div>
     <div class="form-group">
         <label for="">Prénom</label>
         <input type="text" name="prenomconnect"class="form-control" >
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="">Email</label>
         <input type="text" name="emailconnect" class="form-control">

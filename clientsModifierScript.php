@@ -4,7 +4,15 @@ $db = connexionBase();
 include ('entete.php');
 require_once("function.php");
 
-
+$id = null; 
+if ( !empty($_GET['id'])) 
+{ 
+    $id = $_REQUEST['id']; 
+} 
+if ( null==$id ) 
+{ 
+    header("Location: clients.php"); 
+} 
 if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 {
     //on initialise nos messages d'erreurs;
@@ -80,7 +88,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     }
     else if (!preg_match("#^0[1-68]([-. ]?[0-9]{2}){4}$#",$telephone)) 
     { 
-        $errors['telephone'] = "Seulement 10 chiffres autorisé "; 
+        $errors['telephone'] = "Seulement 10 chiffres autorisé et commence par un 0 . "; 
     } 
 
     if (empty($email)) 
@@ -121,16 +129,35 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         $_SESSION['email'] = $email;
         $_SESSION['metier'] = $metier;
         $_SESSION['commentaire'] = $commentaire;
-        header("Location: clientsAjout.php");
-    }
-    else
+        header("Location: clientsmodifier.php");
+}
+else
+{
+    if ($valid) 
     {
-        if($valid)
-        {
-            $pdoStat = $db -> prepare ("INSERT INTO clients (nom,prenom,adresse,code_postale,ville,telephone,email,metier,commentaire) 
-                                        VALUES (?,?,?,?,?,?,?,?,?)");
-            $pdoStat->execute(array($nom,$prenom,$adresse,$codePostal,$ville,$telephone,$email,$metier,$commentaire));                                
-            header("Location: clients.php");                            
-        }
+        $requete = "UPDATE clients SET prenom = ?,prenom = ?, adresse = ?,code_postale = ?,ville = ?, telephone = ? ,
+                    metier = ? , commentaire = ? 
+                    WHERE id= ?";
+        $pdoStat = $db -> prepare ($requete);
+        $pdoStat -> execute(array($nom,$prenom,$adresse,$codePostal,$ville,$telephone,$email,$metier,$commentaire));
+        // header("location:clients.php");
+        var_dump($requete);
     }
+    
+    $requete = "SELECT * FROM clients where id = ?";
+    $pdoStat = $pdo->prepare($sql);
+    $pdoStat->execute(array($id));
+    $data = $pdoStat->fetch(PDO::FETCH_ASSOC);
+    $nom = $data['nom'];
+    $prenom = $data['prenom'];
+    $adresse = $data['adresse'];
+    $codePostal = $data['codePostal'];
+    $ville = $data['ville'];
+    $telephone = $data['telephone'];
+    $email = $data['email'];
+    $metier = $data['metier'];
+    $commentaire = $data['commentaire'];
+    
+    
+}
 }

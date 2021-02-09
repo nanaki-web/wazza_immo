@@ -54,7 +54,7 @@ $db = connexionBase();
 <?php
 $requete = 'SELECT * 
         FROM clients  
-        ORDER BY id  
+        ORDER BY nom 
         DESC';
 $result = $db -> query($requete);
 while($row = $result->fetch(PDO::FETCH_OBJ))
@@ -70,8 +70,8 @@ while($row = $result->fetch(PDO::FETCH_OBJ))
   echo'<td>'.$row->commentaire.'</td>';
   echo '<p>';
   echo'<td>'.'<a class = "btn" href= "" >Read</a>'.'</td>';
-  echo'<td>'.'<a class = "btn btn-success" href ="" >Modifier</a>'.'</td>';
-  echo'<td>'.'<a class = "btn btn-danger" href = "" >supprimer</a>'.'</td>';
+  echo'<td>'.'<a class = "btn btn-success" href ="clientsmodifier.php?id=' . $row->id .'" >Modifier</a>'.'</td>';
+  echo'<td>'.'<a class = "btn btn-danger" href = "clientsSupprimer.php?id='. $row->id.'" >supprimer</a>'.'</td>';
   echo '</p>';
   echo '</tr>';
 }
