@@ -1,51 +1,106 @@
 <?php
-session_start();
+
 require('connexion_bdd.php');
 $db = connexionBase();
 if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 {
     $errors = [];
 
-   
+
     $email = htmlentities(trim($_POST['emailconnect']));
     $mdp = htmlentities(trim($_POST['mdpconnect']));
-    if(!empty($email) AND !empty($mdp))
-    {
-        $requser = $db -> prepare ("SELECT * 
-                                    FROM Utilisateurs 
-                                    WHERE  email = ? AND motDePasse = ?");
-        //hacher le mot de passe dans la base de donner
-        $scriptageMdp = password_hash($vMdp,PASSWORD_BCRYPT);
-        $requser ->execute(array($email,$scriptageMdp));
-        //compter le nombre de ligne 
-        $userexist = $requser -> rowCount();
-        if($userexist == 1)
+    var_dump($email,$mdp);
+    
+    
+        $req= $db -> prepare ("SELECT id,motDePasse 
+                                FROM Utilisateurs 
+                                WHERE  email = :email");
+        $req->execute(array('email'=>$email));
+        $resultat = $req->fetch();
+        // Comparaison du pass envoyé via le formulaire avec la base
+        // password_verify est fonction va en fait hacher le mot de passe de l'utilisateur qui vient de se connecter, 
+        // et le comparer à celui qui était stocké en base de données.
+        $isPasswordCorrect = password_verify($mdp, $resultat['motDePasse']);
+        var_dump($isPasswordCorrect);
+        // var_dump($req);
+        if(!$resultat)
         {
-            $userinfo =$requser -> fetch();
-            $_SESSION['id'] = $userinfo['id'];
-            $_SESSION['nom'] = $userinfo['nom'];
-            $_SESSION['prenom'] = $userinfo['prenom'];
-            $_SESSION['email'] = $userinfo['email'];
-            header("location:profile.php?id=".$_SESSION['id']);
-
-
+            echo "mauvais identifiant ou de mot de passe";
         }
         else
         {
-            $errors['erreurs'] = "identifiant ou mail ou mot de passe ne correspondent pas  ";
+            if($isPasswordCorrect)
+            {
+                session_start();
+                $_SESSION['id'] = $resultat['id'];
+                $_SESSION['email'] = $resultat['email'];
+                var_dump($_SESSION['email']);
+                var_dump($resultat['email']);
+                var_dump($_SESSION['id']);
+                var_dump($resultat['id']);
+                echo "vous êtes connecté !";
+            }
+            else
+            {
+                echo "mauvais identifiant ou de mot de passe";
+            }
+        
+        
         }
-    }
-    else
-    {
-        $errors['erreur'] = "Tout les champs doivent être complétés !";
-    }
-
-    if(!empty($errors))  
-    {
-        session_start();
-        $_SESSION['errors'] = $errors;
-        header("location:connection.php");
-    } 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //hacher le mot de passe dans la base de donner
+    //     $scriptageMdp = password_hash($mdp,PASSWORD_BCRYPT);
+    //     $requser ->execute(array('email'=>$email,
+    //                              'mdp'=>$scriptageMdp));
+    //     var_dump($requser);
+    //     var_dump($scriptageMdp);
+    //     //compter le nombre de ligne 
+    //     $userexist = $requser -> rowCount();
+    //     if($userexist == 1)
+    //     {
+    //         $userinfo =$requser -> fetch();
+    //         session_start(); //on ouvre la session
+           
+    //         $_SESSION['prenom'] = $userinfo['prenom'];
+    //         $_SESSION['email'] = $userinfo['email'];
+    //         // header("location:profile.php?id=".$_SESSION['id']);
+
+
+    //     }
+    //     else
+    //     {
+    //         $errors['erreurs'] = "identifiant ou mail ou mot de passe ne correspondent pas  ";
+    //     }
+    // }
+    // else
+    // {
+    //     $errors['erreur'] = "Tout les champs doivent être complétés !";
+    // }
+
+    // if(!empty($errors))  
+    // {
+    //     session_start();
+    //     $_SESSION['errors'] = $errors;
+    //     // header("location:connection.php");
+    // } 
+
 
 

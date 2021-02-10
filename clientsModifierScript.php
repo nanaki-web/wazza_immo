@@ -135,28 +135,27 @@ else
 {
     if ($valid) 
     {
-        $requete = "UPDATE clients SET prenom = ?,prenom = ?, adresse = ?,code_postale = ?,ville = ?, telephone = ? ,
-                    metier = ? , commentaire = ? 
-                    WHERE id= ?";
-        $pdoStat = $db -> prepare ($requete);
-        $pdoStat -> execute(array($nom,$prenom,$adresse,$codePostal,$ville,$telephone,$email,$metier,$commentaire));
-        // header("location:clients.php");
-        var_dump($requete);
+        $id=$_GET['id'];
+        $pdoStat = $db -> prepare ("UPDATE clients 
+                                    SET prenom = :nom,prenom = :prenom, adresse = :adresse,code_postale = :codePostal,ville = :ville, telephone = :telephone ,
+                                        metier = :metier, commentaire = :commentaire 
+                                    WHERE id= :id"); 
+        $pdoStat->bindValue(':nom', $nom);                            
+        $pdoStat->bindValue(':nom', $prenom);
+        $pdoStat->bindValue(':nom', $adresse); 
+        $pdoStat->bindValue(':nom', $codePostal, PDO::PARAM_INT);
+        $pdoStat->bindValue(':nom', $ville); 
+        $pdoStat->bindValue(':nom', $telephone);
+        $pdoStat->bindValue(':nom', $email);
+        $pdoStat->bindValue(':nom', $metier);
+        $pdoStat->bindValue(':nom', $commentaire);
+
+        $pdoStat->execute();
+        header("Location: clients.php");
+
     }
     
-    $requete = "SELECT * FROM clients where id = ?";
-    $pdoStat = $pdo->prepare($sql);
-    $pdoStat->execute(array($id));
-    $data = $pdoStat->fetch(PDO::FETCH_ASSOC);
-    $nom = $data['nom'];
-    $prenom = $data['prenom'];
-    $adresse = $data['adresse'];
-    $codePostal = $data['codePostal'];
-    $ville = $data['ville'];
-    $telephone = $data['telephone'];
-    $email = $data['email'];
-    $metier = $data['metier'];
-    $commentaire = $data['commentaire'];
+
     
     
 }

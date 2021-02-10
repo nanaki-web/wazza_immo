@@ -22,14 +22,18 @@ if(!empty($_POST))
 
 ?>
 
-<br />
+<div class= "text-center" >
 <div class="span10 offset1">
 
     <br />
     <div class="row">
 
     <br />
-    <h3>Delete a user</h3>
+
+<h3>Supprimer un client</h3>
+
+
+    
     <p>
 
     </div>
@@ -40,12 +44,12 @@ if(!empty($_POST))
     <form class="form-horizontal" action="" method="post">
         <input type="hidden" name="id" value="<?php echo $id;?>"/>
 
-        Are you sure to delete ?
+        Etes vous sûr de vouloir l'effacer ?
 
         <br />
         <div class="form-actions">
-        <button type="submit" class="btn btn-danger">Yes</button>
-        <a class="btn" href="index.php">No</a>
+        <button type="submit" class="btn btn-danger">Oui</button>
+        <a class="btn" href="index.php">Non</a>
         </div>
     <p>
 
@@ -53,3 +57,5 @@ if(!empty($_POST))
     <p>
 </div>
 <p>
+</div>
+<br />

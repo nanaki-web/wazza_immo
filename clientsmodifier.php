@@ -4,7 +4,19 @@ require 'connexion_bdd.php';
 $db = connexionBase();
 include ('entete.php');
 
+
+
+
 ?>
+<!-- construction d'une requête -->
+
+<?php
+
+$id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
+
+
+ 
+ ?>
 <!-- ***********************Barre modification du client******************************************** -->
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
   <div class="col-md-2 text white-50 text-right"></div>
@@ -17,7 +29,7 @@ include ('entete.php');
 <form method = "POST" action = "clientsModifierScript.php">
     <div class="form-group">
             <label  for="nom">Nom</label>
-            <input type="text" name="nom" class="form-control" value ="<?php echo $_SESSION ['nom'] ?? '';unset($_SESSION['nom']);?>">
+            <input type="text" name="nom" class="form-control" value ="<?php echo  $_SESSION ['nom'] ?? '';unset($_SESSION['nom']);?>">
             <?php 
             if (isset($_SESSION['errors']))
             {
@@ -36,7 +48,7 @@ include ('entete.php');
     <div class="form-group">
     
             <label  for="prenom">Prenom</label>
-            <input type="text" name="prenom" class="form-control"value = "<?php echo $_SESSION ['prenom'] ?? '';unset($_SESSION['prenom']);?>">
+            <input type="text" name="prenom" class="form-control"value = "<?php echo $row->id ; $_SESSION ['prenom'] ?? '';unset($_SESSION['prenom']);?>">
             <?php
             if (isset($_SESSION['errors']))
             {

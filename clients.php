@@ -3,7 +3,14 @@ include ("entete.php");
 require('connexion_bdd.php');
 $db = connexionBase();
 ?>
+<!-- construction d'une requête -->
 
+<?php
+
+$id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
+
+ 
+ ?>
 
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
   <div class="col-md-2 text white-50 text-right"></div>
@@ -12,14 +19,14 @@ $db = connexionBase();
 </div>
 
 <div class="row">
-                
-                <p>
-                    <a href="clientsAjout.php" class="btn btn-success">Ajouter un client</a>
-                    <a href="" class="btn btn-danger">Deconnexion</a>
-                </p>
-                
+  <p>
+    <a href="clientsAjout.php" class="btn btn-success">Ajouter un client</a>
+    <a href="" class="btn btn-danger">Deconnexion</a>
+  </p>
 </div>
+
 <br />
+
 <div class="table-responsive">
 
 <br />
@@ -69,7 +76,7 @@ while($row = $result->fetch(PDO::FETCH_OBJ))
   echo'<td>'.$row->metier.'</td>';
   echo'<td>'.$row->commentaire.'</td>';
   echo '<p>';
-  echo'<td>'.'<a class = "btn" href= "" >Read</a>'.'</td>';
+  echo'<td>'.'<a class = "btn" href= "clientsLire.php?id='.$row->id.'" >Lire</a>'.'</td>';
   echo'<td>'.'<a class = "btn btn-success" href ="clientsmodifier.php?id=' . $row->id .'" >Modifier</a>'.'</td>';
   echo'<td>'.'<a class = "btn btn-danger" href = "clientsSupprimer.php?id='. $row->id.'" >supprimer</a>'.'</td>';
   echo '</p>';

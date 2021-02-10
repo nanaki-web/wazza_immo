@@ -12,3 +12,28 @@ function str_random ($taille)
     $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
     return substr(str_shuffle(str_repeat($alphabet,$taille)),0,$taille);
 }
+
+?>
+<script>
+
+//vérifie si on envoit ou non le formulaire à "script_modif.php"
+function verif(){ 
+
+    //Rappel : confirm() -> Bouton OK et Annuler, renvoit true ou false
+    var resultat = confirm("Etes-vous certain de vouloir modifier cet enregistrement ?");
+
+    //alert("retour :"+ resultat);
+
+    if (resultat==false){
+
+    alert("Vous avez annulé les modifications \nAucune modification ne sera apportée à cet enregistrement !");
+
+    //annule l'évènement par défaut ... SUBMIT vers "script_modif.php"
+    event.preventDefault();    
+
+    }
+
+    
+}
+
+</script>
