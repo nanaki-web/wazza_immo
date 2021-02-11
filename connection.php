@@ -11,6 +11,9 @@ if(array_key_exists('errors',$_SESSION)):?>
   </div>
 <?php unset($_SESSION['errors']); endif;?>
 
+
+
+
 <form action="connectionScript.php" method ="POST">
 
     <div class="form-group">

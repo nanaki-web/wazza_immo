@@ -8,14 +8,23 @@ include ('entete.php');
 
 
 ?>
-<!-- construction d'une requête -->
+<!-- construction de la requête -->
 
 <?php
+if(isset($_GET['id']))
+{
+    $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
+}
+// construction de la requête
+$requete = "SELECT * 
+            FROM clients
+            where id=".$id;
+$result = $db->query($requete);
+// récupération du résultat de la requête
+$row = $result->fetch(PDO::FETCH_OBJ);
+//libère la connection au serveur de BDD
+$result->closeCursor();
 
-$id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
-
-
- 
  ?>
 <!-- ***********************Barre modification du client******************************************** -->
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
@@ -28,8 +37,12 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
 
 <form method = "POST" action = "clientsModifierScript.php">
     <div class="form-group">
-            <label  for="nom">Nom</label>
-            <input type="text" name="nom" class="form-control" value ="<?php echo  $_SESSION ['nom'] ?? '';unset($_SESSION['nom']);?>">
+            <input type="text" name="id" class="form-control" hidden value="<?php echo $row->id ?>"  >
+
+
+
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" class="form-control" value ="<?php echo $row->nom?>">
             <?php 
             if (isset($_SESSION['errors']))
             {
@@ -48,7 +61,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     <div class="form-group">
     
             <label  for="prenom">Prenom</label>
-            <input type="text" name="prenom" class="form-control"value = "<?php echo $row->id ; $_SESSION ['prenom'] ?? '';unset($_SESSION['prenom']);?>">
+            <input type="text" name="prenom" class="form-control"value = "<?php echo  $row->prenom;?>">
             <?php
             if (isset($_SESSION['errors']))
             {
@@ -67,7 +80,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     <div class="form-group">
     
             <label  for="adresse" >Adresse</label>
-            <input type="text" name="adresse" class="form-control" value ="<?php echo $_SESSION ['adresse'] ?? '';unset($_SESSION['adresse']);?>">
+            <input type="text" name="adresse" class="form-control" value ="<?php echo $row->adresse;?>">
             <?php
             if (isset($_SESSION['errors']))
             {
@@ -85,7 +98,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     </div> 
     <div class="form-group">
             <label  for="codePostal">Code postale</label>
-            <input type="text" name="codePostal" class="form-control" value ="<?php echo $_SESSION ['codePostal'] ?? '';unset($_SESSION['codePostal']);?>">
+            <input type="text" name="codePostal" class="form-control" value ="<?php echo $row->code_postale;?>">
             <?php
             if (isset($_SESSION['errors']))
             {
@@ -103,7 +116,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     </div>
     <div class="form-group">
             <label  for="ville">ville</label>
-            <input type="text" name="ville" class="form-control" value = "<?php echo $_SESSION ['ville'] ?? '';unset($_SESSION['ville']);?>">
+            <input type="text" name="ville" class="form-control" value = "<?php echo $row->ville;?>">
             
             <?php
             if (isset($_SESSION['errors']))
@@ -122,7 +135,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     </div>
     <div class="form-group">
             <label  for="telephone">téléphone</label>
-            <input type="text" name="telephone" class="form-control" value ="<?php echo $_SESSION ['telephone'] ?? '';unset($_SESSION['telephone']);?>">
+            <input type="text" name="telephone" class="form-control" value ="<?php echo $row->telephone;?>">
             
             <?php
             if (isset($_SESSION['errors']))
@@ -141,7 +154,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     </div>
     <div class="form-group">
             <label  for="email">email</label>
-            <input type="text" name="email" class="form-control" value ="<?php echo $_SESSION ['email'] ?? '';unset($_SESSION['email']);?>">
+            <input type="text" name="email" class="form-control" value ="<?php echo $row->email;?>">
             
             <?php
             if (isset($_SESSION['errors']))
@@ -160,7 +173,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     </div>
     <div class="form-group">
             <label  for="metier">Métier</label>
-            <input type="text" name="metier" class="form-control" value ="<?php echo $_SESSION ['metier'] ?? '';unset($_SESSION['metier']);?>">
+            <input type="text" name="metier" class="form-control" value ="<?php echo $row->metier;?>">
             
     <?php
     if (isset($_SESSION['errors']))
@@ -179,7 +192,7 @@ $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> da
     </div>
     <div class="form-group">
             <label for="commentaire">commentaire</label>
-            <textarea type="text" name="commentaire" class="form-control"><?php echo $_SESSION ['commentaire'] ?? '';?></textarea>
+            <textarea type="text" name="commentaire" class="form-control"><?php echo $row->commentaire;?></textarea>
             <?php
     if (isset($_SESSION['errors']))
     {

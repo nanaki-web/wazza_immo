@@ -7,7 +7,7 @@ $db = connexionBase();
 
 <?php
 
-$id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
+// $id=$_GET['id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
 
  
  ?>

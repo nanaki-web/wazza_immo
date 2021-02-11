@@ -33,22 +33,22 @@ $pdoStat = $db->prepare('INSERT INTO annonces (an_offre,an_type,an_pieces,an_ref
 var_dump($pdoStat);
 $pdoStat->execute([
     
-    ':typeOffre' -> $_POST['an_type'], 
-    ':typeBien' -> $_POST['an_offre'],
-    ':nbreP' -> $_POST['an_pieces'],
-    ':reference' -> $_POST['an_ref'],
-    ':titre' -> $_POST['an_titre'], 
-    ':description' -> $_POST['an_description'], 
-    ':localisation' -> $_POST['an_local'], 
-    ':surfaceHabitable' -> $_POST['an_surf_hab'],
-    ':surfaceTotal' -> $_POST['an_surf_tot'],
-    ':prix' -> $_POST['an_prix'],
-    ':diagnosticBouton' -> $_POST['an_diagnostic'],
-    ':photo' -> $_POST['an_photo'],
-    ':dateAjout' -> $_POST['an_d_ajout']
+                        ':typeOffre' -> $_POST['an_type'], 
+                        ':typeBien' -> $_POST['an_offre'],
+                        ':nbreP' -> $_POST['an_pieces'],
+                        ':reference' -> $_POST['an_ref'],
+                        ':titre' -> $_POST['an_titre'], 
+                        ':description' -> $_POST['an_description'], 
+                        ':localisation' -> $_POST['an_local'], 
+                        ':surfaceHabitable' -> $_POST['an_surf_hab'],
+                        ':surfaceTotal' -> $_POST['an_surf_tot'],
+                        ':prix' -> $_POST['an_prix'],
+                        ':diagnosticBouton' -> $_POST['an_diagnostic'],
+                        ':photo' -> $_POST['an_photo'],
+                        ':dateAjout' -> $_POST['an_d_ajout']
 
     
-]);
+                ]);
 var_dump($pdoStat);
 
 

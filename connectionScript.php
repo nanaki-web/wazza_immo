@@ -5,14 +5,16 @@ $db = connexionBase();
 if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 {
     $errors = [];
+    
 
 
     $email = htmlentities(trim($_POST['emailconnect']));
     $mdp = htmlentities(trim($_POST['mdpconnect']));
+    $nom =htmlentities(trim($_POST['$nom']));
     var_dump($email,$mdp);
     
     
-        $req= $db -> prepare ("SELECT id,motDePasse 
+        $req= $db -> prepare ("SELECT id,motDePasse,email 
                                 FROM Utilisateurs 
                                 WHERE  email = :email");
         $req->execute(array('email'=>$email));
@@ -21,11 +23,12 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         // password_verify est fonction va en fait hacher le mot de passe de l'utilisateur qui vient de se connecter, 
         // et le comparer à celui qui était stocké en base de données.
         $isPasswordCorrect = password_verify($mdp, $resultat['motDePasse']);
-        var_dump($isPasswordCorrect);
+        // var_dump($isPasswordCorrect);
         // var_dump($req);
         if(!$resultat)
         {
-            echo "mauvais identifiant ou de mot de passe";
+            // echo "mauvais identifiant ou de mot de passe";
+            $errors ['erreurId'] = "mauvais identifiant ou de mot de passe";
         }
         else
         {
@@ -34,17 +37,38 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                 session_start();
                 $_SESSION['id'] = $resultat['id'];
                 $_SESSION['email'] = $resultat['email'];
-                var_dump($_SESSION['email']);
-                var_dump($resultat['email']);
-                var_dump($_SESSION['id']);
-                var_dump($resultat['id']);
-                echo "vous êtes connecté !";
+                // var_dump($_SESSION['email']);
+                // var_dump($resultat['email']);
+                // var_dump($_SESSION['id']);
+                var_dump($resultat);
+                // echo "vous êtes connecté !";
+                $messages['msgconnection'] = "vous êtes connecté !";
             }
             else
             {
-                echo "mauvais identifiant ou de mot de passe";
+                $errors['erreurId'] = "mauvais identifiant ou de mot de passe";
+                // echo "mauvais identifiant ou de mot de passe";
             }
-        
+            if(!empty($errors))  
+            {
+                session_start();
+                $_SESSION['errors'] = $errors;
+                header("location:connection.php");
+            } 
+            
+            if (isset($_SESSION['id']) AND isset($_SESSION['email']))
+            {
+                echo 'Bonjour ' . $_SESSION['prenom'];
+            }
+            
+            // if(!empty($messages))
+            // {
+            //     session_start();
+            //     $_SESSION["msgconnection"] = $messages;
+            //     header("location:connection.php");
+
+            // }
+            
         
         }
 }

@@ -3,16 +3,19 @@ require 'connexion_bdd.php';
 $db = connexionBase();
 include ('entete.php');
 require_once("function.php");
+session_start();
 
-$id = null; 
-if ( !empty($_GET['id'])) 
+
+// var_dump($_POST);
+if ( !empty($_POST['id'])) 
 { 
     $id = $_REQUEST['id']; 
+    var_dump($id);
 } 
-if ( null==$id ) 
-{ 
-    header("Location: clients.php"); 
-} 
+
+
+
+
 if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 {
     //on initialise nos messages d'erreurs;
@@ -116,9 +119,11 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         $errors['commentaire'] = "Seulement des lettres, des espaces autorisé et des chiffres"; 
     } 
 
+
+
+
     if (!empty($errors))
     {
-        session_start();
         $_SESSION['errors'] = $errors;
         $_SESSION['nom'] = $nom;
         $_SESSION['prenom'] = $prenom;
@@ -129,34 +134,42 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         $_SESSION['email'] = $email;
         $_SESSION['metier'] = $metier;
         $_SESSION['commentaire'] = $commentaire;
-        header("Location: clientsmodifier.php");
-}
+        // header("Location: clientsmodifier.php");
+    }
 else
 {
     if ($valid) 
     {
-        $id=$_GET['id'];
+        var_dump($valid);
+        // $id=$_GET['id'];
+        var_dump($id);
         $pdoStat = $db -> prepare ("UPDATE clients 
-                                    SET prenom = :nom,prenom = :prenom, adresse = :adresse,code_postale = :codePostal,ville = :ville, telephone = :telephone ,
-                                        metier = :metier, commentaire = :commentaire 
-                                    WHERE id= :id"); 
+                                    SET nom=:nom, prenom=:prenom, adresse=:adresse, code_postale=:codePostal, ville=:ville, telephone=:telephone, email=:email,
+                                        metier=:metier, commentaire=:commentaire 
+                                    WHERE id=:id");
+        $pdoStat->bindValue(':id', $id);                            
         $pdoStat->bindValue(':nom', $nom);                            
-        $pdoStat->bindValue(':nom', $prenom);
-        $pdoStat->bindValue(':nom', $adresse); 
-        $pdoStat->bindValue(':nom', $codePostal, PDO::PARAM_INT);
-        $pdoStat->bindValue(':nom', $ville); 
-        $pdoStat->bindValue(':nom', $telephone);
-        $pdoStat->bindValue(':nom', $email);
-        $pdoStat->bindValue(':nom', $metier);
-        $pdoStat->bindValue(':nom', $commentaire);
+        $pdoStat->bindValue(':prenom', $prenom);
+        $pdoStat->bindValue(':adresse', $adresse); 
+        $pdoStat->bindValue(':codePostal', $codePostal, PDO::PARAM_INT);
+        $pdoStat->bindValue(':ville', $ville); 
+        $pdoStat->bindValue(':telephone', $telephone);
+        $pdoStat->bindValue(':email', $email);
+        $pdoStat->bindValue(':metier', $metier);
+        $pdoStat->bindValue(':commentaire', $commentaire);
 
         $pdoStat->execute();
+        $pdoStat->closeCursor();
+
+        //redirection vers la page index.php 
         header("Location: clients.php");
+        
 
     }
-    
+
 
     
     
 }
+
 }
