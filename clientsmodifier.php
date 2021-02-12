@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require 'connexion_bdd.php';
 $db = connexionBase();
 include ('entete.php');
@@ -203,7 +203,6 @@ $result->closeCursor();
         echo "</div>";
         
         unset($_SESSION['errors']);//unset supprime ou enleve l'élément du tableau .
-    
     }
     }
     ?>

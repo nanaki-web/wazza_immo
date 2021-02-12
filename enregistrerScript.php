@@ -70,8 +70,8 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     {
         if(empty($errors))
         {
-            $pdoStat = $db -> prepare ("INSERT INTO utilisateurs (nom,prenom,email,motDePasse,confirmation_token)
-                                        VALUES (?,?,?,?,?)");
+            $pdoStat = $db -> prepare ("INSERT INTO utilisateurs (nom,prenom,email,motDePasse,confirmation_token,confirmation_date)
+                                        VALUES (?,?,?,?,?,CURDATE()");
             //hacher le mot de passe dans la base de donner
             $scriptageMdp = password_hash($vMdp,PASSWORD_BCRYPT);
             $token = str_random(60);

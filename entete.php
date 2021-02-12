@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
   // require("function.php");
 ?>
 <!DOCTYPE html>
@@ -52,5 +52,7 @@
             </li>
         </ul>
       </div>
+      <div><?php var_dump($_SESSION); echo $_SESSION['messageid'] ?></div>
+
     </nav>
     

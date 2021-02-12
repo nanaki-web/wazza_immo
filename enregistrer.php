@@ -1,5 +1,5 @@
 <?php 
-session_start();
+
 include("entete.php");
 ?>
 
@@ -18,13 +18,6 @@ if(array_key_exists('errors',$_SESSION)):?>
 
 
 
-<p><span class="validation"></span></p>
-<?php
-if(array_key_exists('compte',$_SESSION)):?>
-  <div class="alert alert-danger">
-    <?= implode('<br>',$_SESSION['compte']);?>
-  </div>
-<?php unset($_SESSION['compte']); endif;?>
 
 
 

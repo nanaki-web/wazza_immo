@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 include ('entete.php');
 ?>
 <H1>Se connecter</H1>
@@ -10,6 +10,7 @@ if(array_key_exists('errors',$_SESSION)):?>
     <?= implode('<br>',$_SESSION['errors']);?>
   </div>
 <?php unset($_SESSION['errors']); endif;?>
+
 
 
 

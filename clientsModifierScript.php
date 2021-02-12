@@ -10,7 +10,7 @@ session_start();
 if ( !empty($_POST['id'])) 
 { 
     $id = $_REQUEST['id']; 
-    var_dump($id);
+    // var_dump($id);
 } 
 
 
@@ -140,9 +140,9 @@ else
 {
     if ($valid) 
     {
-        var_dump($valid);
+        // var_dump($valid);
         // $id=$_GET['id'];
-        var_dump($id);
+        // var_dump($id);
         $pdoStat = $db -> prepare ("UPDATE clients 
                                     SET nom=:nom, prenom=:prenom, adresse=:adresse, code_postale=:codePostal, ville=:ville, telephone=:telephone, email=:email,
                                         metier=:metier, commentaire=:commentaire 
