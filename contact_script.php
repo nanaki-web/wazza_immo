@@ -95,7 +95,7 @@ if(!empty($_POST))
         $errors['email'] = "s'il vous plaît, Entrer un email valide"; 
         $valid = false; 
     } 
-    var_dump($errors);
+    // var_dump($errors);
     if ($sujet == "0" )
     { 
         $errors['sujet'] = "s'il vous plait ,choississez une option"; 

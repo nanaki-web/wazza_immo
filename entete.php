@@ -52,7 +52,16 @@ session_start();
             </li>
         </ul>
       </div>
-      <div><?php var_dump($_SESSION); echo $_SESSION['messageid'] ?></div>
-
+      <?php
+      if(isset ($_SESSION['messageid']))
+      {
+        ?>
+        <div class ="row">
+        <div><?php  echo $_SESSION['messageid'] ?></div>
+          <a class="btn btn-danger" href="deconnexion.php" role="button">Déconnexion</a>
+        </div>
+        <?php
+      }
+      ?>
     </nav>
     

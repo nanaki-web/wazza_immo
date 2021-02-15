@@ -1,9 +1,28 @@
 <?php
+require 'connexion_bdd.php';
+$db = connexionBase();
 include("entete.php");
-
+$an_id = $_GET["an_id"];
 ?>
+<!-- construction de la requête -->
 
+<?php
+if(isset($_GET['an_id']))
+{
+    $an_id=$_GET['an_id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
+}
+?>
+<!-- ***********************************************requete******************************************************************************************** -->
+    <?php
 
+    $requete = "select * FROM annonces where an_id=".$an_id;
+    $result = $db->query($requete);
+    $annonces = $result->fetch(PDO::FETCH_OBJ);
+
+    $request = "select pho_nom,an_id FROM photo where an_id=".$an_id; // recuperation des photos dans la BDD avec l'id annonce
+    $resultPhoto = $db->query($request);
+    $result->closeCursor();
+?>
 <!-- **********************************************Barre ajout annonce*********************************************************************** -->
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
   <div class="col-md-2 text white-50 text-right"></div>
@@ -11,23 +30,24 @@ include("entete.php");
 </div>
 <!-- *************************************************formulaire******************************************************************* -->
 
-<form action = "annonce_script_modification" method = "post"  enctype="multipart/form-data >
+<form action = "annonce_script_modification" method = "post"  enctype="multipart/form-data" >
     <div class="form-group">
+    <input type="text" name="id" class="form-control" hidden value="<?php echo $annonces->an_id ?>"  >
     Type d'offre : <br>
 <!-- bouton radio achat/location/-->
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre">Achat </label>
-            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="achat" >
+            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="achat<?php echo $annonces->an_id ?>an_offre" >
         </div>
 <!--  bouton radio location -->
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre" >Location</label>
-            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="location" checked  >
+            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="location<?php echo $annonces->an_id ?>" checked  >
         </div>
  <!--  bouton radio Viager -->   
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre" >Viager</label>
-            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="viager"   >
+            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="viager<?php echo $annonces->an_id ?>"   >
         </div>
     </div>
 
@@ -78,37 +98,37 @@ Nombre de pièce(s) : <br>
     
     <div class="form-group ">
         <label for="reference">Référence</label>
-        <input type="text" class="form-control" name ="reference" id="reference" aria-describedby="" placeholder="Entrer votre référence">
+        <input type="text" class="form-control" name ="reference" id="reference" aria-describedby="" placeholder="Entrer votre référence" value = "<?php echo $annonces->an_ref ?>">
     </div>
 
 <!-- titre -->
     <div class="form-group ">
         <label for="titre">Titre</label>
-        <textarea class="form-control" name= "titre" id="titre" rows="3"></textarea>
+        <textarea class="form-control" name= "titre" id="titre" rows="3" value = ""><?php echo $annonces->an_titre ?></textarea>
     </div>
 
     <!-- Description -->
     <div class="form-group ">
         <label for="description">Description</label>
-        <textarea class="form-control" name= "description" id="description" rows="3"></textarea>
+        <textarea class="form-control" name= "description" id="description" rows="3" value = ""><?php echo $annonces->an_description ?></textarea>
     </div> 
 
 <!-- Localisation -->
     <div class="form-group ">
         <label for="localisation">Localisation</label>
-        <textarea class="form-control" name= "localisation" id="localisation" rows="3"></textarea>
+        <textarea class="form-control" name= "localisation" id="localisation" rows="3"><?php echo $annonces->an_local ?></textarea>
     </div> 
 
      <!--surface habitable  -->
     <div class="form-group ">
-        <label for="surfaceHabitable">Surface habitable</label>
-        <input type="text" class="form-control" name="surfaceHabitable" id="surfaceHabitable" aria-describedby="" placeholder="Entrer la surface habitable en carré">
+        <label for="surfaceHabitable">Surface habitable en m2</label>
+        <input type="text" class="form-control" name="surfaceHabitable" id="surfaceHabitable" aria-describedby="" placeholder="Entrer la surface habitable en carré" value = "<?php echo $annonces->an_surf_hab ?>">
     </div>
 
     <!-- surface totale -->
     <div class="form-group ">
-        <label for="surfaceTotal">Surface total</label>
-        <input type="text" class="form-control" name="surfaceTotal" id="surfaceTotal" aria-describedby="" placeholder="Entrer la surface habitable en carré">
+        <label for="surfaceTotal">Surface total en m2</label>
+        <input type="text" class="form-control" name="surfaceTotal" id="surfaceTotal" aria-describedby="" placeholder="Entrer la surface habitable en carré" value ="<?php echo $annonces->an_surf_tot ?>">
     </div>
 
     <!-- options -->
@@ -182,47 +202,47 @@ Nombre de pièce(s) : <br>
 
     <div class="form-group">
         <label for="prix">Prix</label>
-        <input type="text" class="form-control" id="prix" name="prix" aria-describedby="" placeholder="Entrer votre prix">
+        <input type="text" class="form-control" id="prix" name="prix" aria-describedby="" placeholder="Entrer votre prix" value ="<?php echo $annonces->an_prix ?>">
     </div>
     <!-- Diagnostic -->
     Diagnotic : <br>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="A" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="A" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">A</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="B" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="B" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">B </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="C" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="C" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">C </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="D" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="D" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">D </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="E" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="E" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">E</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="F" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="F" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">F</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="G" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="G" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">G</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="vierge" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="vierge" id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">Vierge </label>
     </div>
 
@@ -233,15 +253,11 @@ Nombre de pièce(s) : <br>
         <input type="file" name ="photo" class="form-control-file" id="photo">
     </div>
 
-    <!-- Date d’ajout -->
-    <div class="form-group">
-        <label for="dateModification">Date de modification :</label>
-        <input type="date" class="form-control" id="dateModification" name="dateModification" aria-describedby="" placeholder="Entrer votre prix">
-    </div>
     <!-- bouton submit -->
     <input class="btn btn-primary" id = " idEnvoyer " type="submit" value="enregistrer">
+    <a class="btn" href="detail.php?an_id=<?=$annonces ->an_id?>">Retour</a>
 </form> 
-
+<br>
 <?php
     include("pieddepage.php");
 

@@ -1,8 +1,8 @@
 <?php
 require('connexion_bdd.php');
-require('annexes\original\redimensionner.php');
 $db = connexionBase();
 $an_id = $_GET["an_id"];
+var_dump($an_id);
 
 include ("entete.php");
 ?>
@@ -144,7 +144,7 @@ include ("entete.php");
         <div class="card-footer p-0 d-flex flex-row">
           <a href="index.php" class="btn btn-outline-primary w-100" role="button" aria-pressed="true">Retour</a>
           <a href="modification.php?an_id=<?=$annonces ->an_id?>" class="btn btn-outline-warning w-100" role="button" aria-pressed="true">Modification</a>
-          <a href="supprimer.php" class="btn btn-outline-danger w-100 " role="button" aria-pressed="true">Supprimer</a>
+          <a href="supprimer.php?an_id=<?=$annonces ->an_id?>" class="btn btn-outline-danger w-100 " name = "an_id" role="button" aria-pressed="true">Supprimer</a>
           <a href="contact.php" class="btn btn-outline-info w-100 " role="button" aria-pressed="true">Formulaire de contact</a>
         </div>
     </div>

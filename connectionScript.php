@@ -80,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
             if (isset($_SESSION['id']) AND isset($_SESSION['email']))
             {
                 $_SESSION['prenom']=$prenom;
-                $_SESSION['messageid'] = 'Bonjour'.$_SESSION['prenom'];
+                $_SESSION['messageid'] = 'Bonjour'."&nbsp".$_SESSION['prenom'];
                 // var_dump($_SESSION);
                 header("location:index.php");
             }
