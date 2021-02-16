@@ -4,6 +4,8 @@ require('connexion_bdd.php');
 // require('annexes\original\redimensionner.php');
 $db = connexionBase();
 include ("entete.php");
+// $an_id = $_POST['an_id'];
+
 ?>
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
   <div class="col-md-2 text white-50 text-right"></div>
@@ -26,6 +28,7 @@ include ("entete.php");
             <div class="card" >
                 <img class="card-img-top" src="annexes/photos/annonce_<?= $annonces->an_id?>/<?=$rowPhoto->pho_nom?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom?>">
                 <div class="card-body">
+                
                 <div class="mt-0">Reference : </div>
                     <div class="mt-0"><?=$annonces ->an_ref?></div>
                     <div class="mt-0">Description : </div>
@@ -35,6 +38,7 @@ include ("entete.php");
                     <div class="mt-0">Prix: </div>
                     <div class="mt-0"><?= $annonces ->an_prix.'Euros'?></div>
                     <a href="detail.php?an_id=<?=$annonces ->an_id?>" class="btn btn-primary w-100">Détail</a>
+                    
                 </div>
             </div>
         </div>

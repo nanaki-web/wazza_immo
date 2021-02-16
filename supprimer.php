@@ -17,7 +17,7 @@ if(!empty($_POST))
     $pdoStat->execute(array($an_id));
    
 
-    header("Location: detail.php");
+    header("Location: index.php");
 }
 
 ?>

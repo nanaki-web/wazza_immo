@@ -50,6 +50,16 @@ session_start();
             <li class="nav-item">
               <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
+
+            <?php
+                    if (isset($_SESSION['auth'])) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Se deconnecter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account">Mon compte</a>
+                    </li>
+                    <?php endif; ?>
         </ul>
       </div>
       <?php

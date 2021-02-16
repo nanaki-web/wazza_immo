@@ -139,12 +139,12 @@ if(!empty($_POST))
         if ($valid) 
         {
             // $pdo = base::connect();
+            mail('contact@test.fr', 'MailDev test', 'Contenu du mail à consulter depuis MailDev', 'From: info@societe.com');
             $pdoStat = $db -> prepare ("INSERT INTO contacts (nom,prenom,adresse,code_postale,ville,telephone,email,sujet,question)
                                         VALUES (?,?,?,?,?,?,?,?,?)");
-
-
-            //  var_dump($_POST);
-            $pdoStat->execute(array($nom,$prenom,$adresse,$code_postale,$ville,$telephone,$email,$sujet,$question));
+                                    
+                                    
+                                     $pdoStat->execute(array($nom,$prenom,$adresse,$code_postale,$ville,$telephone,$email,$sujet,$question));
             // Database::disconnect();
             header("Location: index.php");
         }

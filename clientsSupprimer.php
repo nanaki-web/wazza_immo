@@ -15,7 +15,7 @@ if(!empty($_POST))
                                 FROM clients 
                                 WHERE id = ?") ;
     $pdoStat->execute(array($id));
-   
+
 
     header("Location: clients.php");
 }

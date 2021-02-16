@@ -1,8 +1,13 @@
 <?php
 include("entete.php");
-
 ?>
-
+<!-- session pour les messages d'erreur sur la page -->
+<?php
+if(array_key_exists('errors',$_SESSION)):?>
+  <div class="alert alert-danger">
+    <?= implode('<br>',$_SESSION['errors']);?>
+  </div>
+<?php unset($_SESSION['errors']); endif;?>
 
 <!-- **********************************************Barre ajout annonce*********************************************************************** -->
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
@@ -22,27 +27,14 @@ include("entete.php");
 <!--  bouton radio location -->
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre" >Location</label>
-            <input class="form-check-input" type="radio" id="typeOffre" name="typeOffre" value="L" checked  >
+            <input class="form-check-input" type="radio" id="typeOffre" name="typeOffre" value="L" >
         </div>
  <!--  bouton radio Viager -->   
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre" >Viager</label>
-            <input class="form-check-input" type="radio" id="typeOffre" name="typeOffre" value="V"   >
+            <input class="form-check-input" type="radio" id="typeOffre" name="typeOffre" value="V" >
         </div>
-        <?php 
-            if (isset($_SESSION['errors']))
-            {
-            if (isset($_SESSION['errors']['typeOffre']))
-            {
-                echo "<div class='alert alert-danger'>";
-                echo $_SESSION['errors']['typeOffre'];
-                echo "</div>";
-                unset($_SESSION['errors']);
-                //unset supprime ou enleve l'élément du tableau .
-            
-            }
-            }
-            ?>
+        
     </div>
 
 <div>
@@ -54,20 +46,7 @@ include("entete.php");
   <option  value="3">Immeuble</option>
 
   </select>
-  <?php 
-            if (isset($_SESSION['errors']))
-            {
-            if (isset($_SESSION['errors']['typeBien']))
-            {
-                echo "<div class='alert alert-danger'>";
-                echo $_SESSION['errors']['typeBien'];
-                echo "</div>";
-                unset($_SESSION['errors']);
-                //unset supprime ou enleve l'élément du tableau .
-            
-            }
-            }
-            ?>
+  
 </div>
 
 
@@ -77,7 +56,7 @@ include("entete.php");
 <!-- nombre de piece -->
 Nombre de pièce(s) : <br>
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="radio" name="nbrePiece" id= "nbrePiece" value="1" >
+        <input class="form-check-input" type="radio" name="nbrePiece" id= "nbrePiece" value="1">
         <label class="form-check-label" for="nbreP">1</label>
         
     </div>
@@ -115,60 +94,23 @@ Nombre de pièce(s) : <br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="nbrePiece" id= "nbrePiece" value="+6" >
         <label class="form-check-label" for="nbreP">+6</label>
-        <?php 
-            if (isset($_SESSION['errors']))
-            {
-            if (isset($_SESSION['errors']['nbrePiece']))
-            {
-                echo "<div class='alert alert-danger'>";
-                echo $_SESSION['errors']['nbrePiece'];
-                echo "</div>";
-                unset($_SESSION['errors']);
-                //unset supprime ou enleve l'élément du tableau .
-            
-            }
-            }
-            ?>
+       
     </div>
 <!-- Référence -->
     
     <div class="form-group ">
         <label for="reference">Référence</label>
         <input type="text" class="form-control" id ="reference" name="an_ref" aria-describedby="" placeholder="Entrer votre référence">
-        <?php 
-            if (isset($_SESSION['errors']))
-            {
-            if (isset($_SESSION['errors']['reference']))
-            {
-                echo "<div class='alert alert-danger'>";
-                echo $_SESSION['errors']['reference'];
-                echo "</div>";
-                unset($_SESSION['errors']);
-                //unset supprime ou enleve l'élément du tableau .
-            
-            }
-            }
-            ?>
+    
+
     </div>
 
 <!-- titre -->
     <div class="form-group ">
         <label for="titre">Titre</label>
         <textarea class="form-control" id= "titre" name="an_titre" rows="3"></textarea>
-        <?php 
-            if (isset($_SESSION['errors']))
-            {
-            if (isset($_SESSION['errors']['titre']))
-            {
-                echo "<div class='alert alert-danger'>";
-                echo $_SESSION['errors']['titre'];
-                echo "</div>";
-                unset($_SESSION['errors']);
-                //unset supprime ou enleve l'élément du tableau .
-            
-            }
-            }
-            ?>
+        
+     
     </div>
 
     <!-- Description -->
@@ -196,9 +138,15 @@ Nombre de pièce(s) : <br>
     </div>
 
     <!-- options -->
-    Option : <br>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="optionBouton" name="anoption[]" value="1">
+        <input class="form-check-input" type="checkbox" id="optionBouton" name="anoption" value="0"checked hidden>
+        <!-- <label class="form-check-label" for="optionBouton"></label> -->
+    </div>
+    <br>
+    Option : <br>
+    
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="optionBouton" name="anoption" value="1">
         <label class="form-check-label" for="optionBouton">Jardin</label>
     </div>
 
@@ -269,6 +217,13 @@ Nombre de pièce(s) : <br>
         <input type="text" class="form-control" name="an_prix" id="prix" aria-describedby="" placeholder="Entrer votre prix">
     </div>
     <!-- Diagnostic -->
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton" name="an_diagnostic" value="0"checked hidden>
+        <!-- <label class="form-check-label" for="optionBouton"></label> -->
+    </div>
+
+    <br>
     Diagnotic : <br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="A" name="an_diagnostic">
@@ -309,7 +264,7 @@ Nombre de pièce(s) : <br>
         <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="vierge" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">Vierge </label>
     </div>
-
+   
     <!-- photos -->
     
     <div class="form-group">
