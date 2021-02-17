@@ -226,42 +226,42 @@ Nombre de pièce(s) : <br>
     <br>
     Diagnotic : <br>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="A" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton1" value="A" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">A</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="B" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton2" value="B" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">B </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="C" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton3" value="C" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">C </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="D" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton4" value="D" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">D </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="E" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton5" value="E" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">E</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="F" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton6" value="F" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">F</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="G" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton7" value="G" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">G</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="diagnosticBouton" value="vierge" name="an_diagnostic">
+        <input class="form-check-input" type="checkbox" id="diagnosticBouton8" value="vierge" name="an_diagnostic">
         <label class="form-check-label" for="diagnosticBouton">Vierge </label>
     </div>
    
@@ -269,7 +269,11 @@ Nombre de pièce(s) : <br>
     
     <div class="form-group">
         <label for="photo"> Téléchargement de la /des photo(s) :</label>
-        <input type="file"  id="photoID" class="form-control-file" name="an_photo">
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
+
+        
     </div>
 
     <!-- Date d’ajout -->

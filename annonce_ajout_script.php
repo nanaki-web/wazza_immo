@@ -135,14 +135,23 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                 // var_dump($errors['diagnostic']);
                 $valid= false; 
         }
+        
+        // $_FILES["fichier"];
+        // var_dump($_FILES);
+        
+        
 
-        // // si il y a des erreurs dans le tableau alors on envois les messages .
+
+
+
+        
+      
         if(!empty($errors))
         {
         
                 $_SESSION['errors']= $errors;
 
-                header("Location: annonce_ajout.php");
+                // header("Location: annonce_ajout.php");
 
         }
         else
@@ -153,9 +162,9 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                 if($valid)
                 {
                         // var_dump($valid);
-                //  ********************************* requête **************************************************
+                //  ********************************* requête pour l'annonce **************************************************
 
-
+                        
                         // preparation de la requete d'insertion sans injection sql
                         $pdoStat = $db->prepare("INSERT INTO annonces (an_offre,an_type,an_pieces,an_ref,an_titre,
                                                                         an_description,an_local,an_surf_hab,an_surf_tot
@@ -181,27 +190,42 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                         // var_dump($pdoStat);
                         $an_id= $db->lastInsertId();//recuperation du dernier id inserer
 
-
+//************************requete pour les options ********************************************************************* */
 
 
                        //pour chaque objet $new dans la variable option
                         foreach($option as $newValueOption)
                         {//prepare la requete d'insertion
                                 $requete = $db->prepare("INSERT INTO annonce_option (an_id,opt_id) VALUES (:an_id, :opt_id)");
-                              
+                
 
                                 $requete->execute([
                                         ':an_id' => (int) $an_id,//recuperation du dernier id inserer en bdd
                                         ':opt_id' => (int) $newValueOption
                                 ]);
                         }
-                          //    $requete->bindvalue(':an_id',$an_id,PDO::PARAM_INT);
+                                //$requete->bindvalue(':an_id',$an_id,PDO::PARAM_INT);
                                 //bindvalue donne la valeur a la requete preparer // :an_id est remplacé dans la requete  $an_id
-                                // $requete->bindvalue(':an_id',$newValueOption,PDO::PARAM_INT);
+                                // $requete->bindvalue(':opt_id',$newValueOption,PDO::PARAM_INT);
+//********************** requete pour la photo**************************************************************************
+                        $extension = pathinfo($_FILES["fichier"]["name"], PATHINFO_EXTENSION);
+                        
+                        var_dump($_FILES);
+                        foreach($_FILES as $fichier)
+                        {
+                                move_uploaded_file($_FILES["fichier"]["tmp_name"],"annexes/photos/annonce_.$an_id./.$an_id. "-" .$fichier.$extension");
+                                var_dump($fichier);
+                        }
+
+
+
+
+
+
 
 
                          //libère la connection au serveur de BDD
-                         $pdoStat->closeCursor();
+                        $pdoStat->closeCursor();
                         //redirection vers la page index.php
                         header("Location: index.php");
 

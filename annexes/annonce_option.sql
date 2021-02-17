@@ -2,7 +2,6 @@ USE wazaaimmo;
 DROP Table IF EXISTS annonce_option;
 CREATE TABLE annonce_option
 (
-
 an_id INT (10),
 opt_id INT (10),
 PRIMARY KEY (an_id,opt_id),
