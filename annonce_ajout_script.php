@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         $surfaceHabitable = $_POST["an_surf_hab"];
         $surfaceTotal = $_POST["an_surf_tot"];
         $option = $_POST['anoption'];
-        var_dump($option);
+        
         $prix = $_POST["an_prix"];
         $diagnosticBouton = $_POST["an_diagnostic"];
         
@@ -151,7 +151,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         
                 $_SESSION['errors']= $errors;
 
-                // header("Location: annonce_ajout.php");
+                header("Location: annonce_ajout.php");
 
         }
         else
@@ -208,20 +208,41 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                                 //bindvalue donne la valeur a la requete preparer // :an_id est remplacé dans la requete  $an_id
                                 // $requete->bindvalue(':opt_id',$newValueOption,PDO::PARAM_INT);
 //********************** requete pour la photo**************************************************************************
-                        $extension = pathinfo($_FILES["fichier"]["name"], PATHINFO_EXTENSION);
                         
-                        var_dump($_FILES);
-                        foreach($_FILES as $fichier)
+                
+                        $fichier = $_FILES['fichier'];
+                        $mk = mkdir("annexes/photos/annonce_".$an_id);
+
+                        var_dump($fichier);
+                        //boucle sur [$_files ][name] et elle recupere la clé et sa valeur 
+                        foreach ($_FILES["fichier"]["name"] as $key => $value) 
                         {
-                                move_uploaded_file($_FILES["fichier"]["tmp_name"],"annexes/photos/annonce_.$an_id./.$an_id. "-" .$fichier.$extension");
-                                var_dump($fichier);
+                                $extension = pathinfo($value, PATHINFO_EXTENSION);
+                                // var_dump($value);
+                                if ($value ) 
+                                {
+                                        $tmp_name = $_FILES["fichier"]["tmp_name"][$key];
+                                    // basename() peut empêcher les attaques "filesystem traversal";
+                                    // une autre validation/néttoyage du nom de fichier peux être appropriée
+        
+                                        $name = basename($_FILES["fichier"]["name"][$key]);
+                                        if($mk)
+                                        {
+                                                $move = move_uploaded_file($_FILES["fichier"]["tmp_name"][$key],"annexes/photos/annonce_".$an_id."/".$an_id. "-" .$key.".".$extension);
+                                                $photo = $db -> prepare("INSERT INTO photo (pho_nom, an_id) VALUE (:pho_nom, :an_id)");
+                                                $photo->execute([
+                                                        ':pho_nom' => $an_id. "-" .$key,
+                                                        ':an_id' => (int) $an_id
+                                                ]);
+                                        }
+
+                                        //     var_dump($move);
+                                        //     var_dump($_FILES["fichier"]["tmp_name"][$key]);
+                                        //     var_dump($an_id);
+                                        //     var_dump($key);
+                                        //     var_dump($extension);
+                                }
                         }
-
-
-
-
-
-
 
 
                          //libère la connection au serveur de BDD

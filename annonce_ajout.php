@@ -100,7 +100,7 @@ Nombre de pièce(s) : <br>
     
     <div class="form-group ">
         <label for="reference">Référence</label>
-        <input type="text" class="form-control" id ="reference" name="an_ref" aria-describedby="" placeholder="Entrer votre référence">
+        <input type="text" class="form-control" id ="reference" name="an_ref" aria-describedby="" placeholder="Entrer votre référence de type :25G563">
     
 
     </div>

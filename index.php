@@ -20,13 +20,20 @@ include ("entete.php");
     $result = $db->query($requete);
     while($annonces = $result->fetch(PDO::FETCH_OBJ))
     {
-        $request = "select pho_nom FROM photo where pho_nom='".$annonces->an_id."-1.jpg'";
-        $resultPhoto = $db->query($request);
-        $rowPhoto = $resultPhoto->fetch(PDO::FETCH_OBJ)
+        $request = $db ->prepare("select pho_nom FROM photo where an_id = :an_id");
+        $request -> bindValue(':an_id',$annonces->an_id,PDO::PARAM_INT);
+        // ='".$annonces->an_id."-1.jpg'
+        $resultPhoto = $request -> execute();
+        // $resultPhoto = $db->query($request);
+        $rowPhoto = $request->fetch(PDO::FETCH_OBJ);
+        // var_dump($rowPhoto);
         ?>
         <div class="col-12 col-md-6 col-lg-4 col-xl-3 my-2">
             <div class="card" >
-                <img class="card-img-top" src="annexes/photos/annonce_<?= $annonces->an_id?>/<?=$rowPhoto->pho_nom?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom?>">
+        
+                <img class="card-img-top" src="annexes/photos/annonce_<?=$annonces->an_id."/".$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom?>">
+                
+
                 <div class="card-body">
                 
                 <div class="mt-0">Reference : </div>
