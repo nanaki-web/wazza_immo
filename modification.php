@@ -14,11 +14,32 @@ if(isset($_GET['an_id']))
 ?>
 <!-- ***********************************************requete******************************************************************************************** -->
     <?php
-
+    //requete lecture table annonce
     $requete = "select * FROM annonces where an_id=".$an_id;
     $result = $db->query($requete);
     $annonces = $result->fetch(PDO::FETCH_OBJ);
+    var_dump($annonces);
+    $typeOffre = $annonces->an_offre;
 
+    //lecture table annonce_option
+    $req = "SELECT * FROM annonce_option WHERE an_id=".$an_id;
+    $resultOption = $db->query($req);
+    
+    // $option = $resultOption->fetch(PDO::FETCH_OBJ);
+    // while($annonces = $result->fetch(PDO::FETCH_OBJ))
+    // {
+    //     $typeOffre = $annonces->an_offre;
+    //     $req = $db -> prepare("SELECT * FROM annonces WHERE an_id= :an_id");
+    //     $req-> bindValue(':an_id',$annonces->an_id,PDO::PARAM_INT);               
+    //     $resultOption = $req->execute();
+        
+    //     $rowOption = $req->fetch(PDO::FETCH_OBJ);
+    //     var_dump($rowOption);
+    // }
+    
+
+
+   //lecture table photos
     $request = "select pho_nom,an_id FROM photo where an_id=".$an_id; // recuperation des photos dans la BDD avec l'id annonce
     $resultPhoto = $db->query($request);
     $result->closeCursor();
@@ -37,60 +58,60 @@ if(isset($_GET['an_id']))
 <!-- bouton radio achat/location/-->
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre">Achat </label>
-            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="achat<?php echo $annonces->an_id ?>an_offre" >
+            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="A"<?php if(isset($typeOffre) && $typeOffre == "A") echo "checked" ; ?> >
         </div>
 <!--  bouton radio location -->
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre" >Location</label>
-            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="location<?php echo $annonces->an_id ?>" checked  >
+            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="L" <?php if(isset($typeOffre) && $typeOffre == "L") echo "checked" ; ?> >
         </div>
  <!--  bouton radio Viager -->   
         <div class="form-check form-check-inline">
             <label class="form-check-label" for="typeOffre" >Viager</label>
-            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="viager<?php echo $annonces->an_id ?>"   >
+            <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="V" <?php if(isset($typeOffre) && $typeOffre == "V") echo "checked" ; ?> >
         </div>
     </div>
 
 <!-- nombre de piece -->
 Nombre de pièce(s) : <br>
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="1" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="1" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "1") echo "checked" ;?> >
         <label class="form-check-label" for="nbreP">1</label>
         
     </div>
 
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="2" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="2" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "2") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">2</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="3" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="3" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "3") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">3</label>
         
     </div>
 
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="4" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="4" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "4") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">4</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="5" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="5" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "5") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">5</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="6" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="6"<?php if(isset($annonces->an_type) && ($annonces->an_type)== "6") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">6</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="+6" >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="+6" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "+6") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">+6</label>
         
     </div>
@@ -154,7 +175,7 @@ Nombre de pièce(s) : <br>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Cuisine ouverte " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton" value="Cuisine ouverte " <?php if(isset($resultOption->opt_id) && ($resultOption->opt_id)== "6") echo "checked" ;var_dump($annonce_option->opt_id); ?> id="optionBouton">
         <label class="form-check-label" for="optionBouton">Cuisine ouverte </label>
     </div>
 
@@ -207,42 +228,42 @@ Nombre de pièce(s) : <br>
     <!-- Diagnostic -->
     Diagnotic : <br>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="A" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="A" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "A") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">A</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="B" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="B" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "B") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">B </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="C" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="C" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "C") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">C </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="D" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="D"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "D") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">D </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="E" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="E"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "E") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">E</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="F" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="F"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "F") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">F</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="G" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="G"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "G") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">G</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="vierge" id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="vierge"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "V") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">Vierge </label>
     </div>
 

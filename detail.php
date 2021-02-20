@@ -46,7 +46,7 @@ include ("entete.php");
                     {
                       ?>
                       <div class="carousel-item active">
-                        <img  class="card-img" alt="..." src="annexes/photos/annonce_<?= $rowPhoto->an_id; ?>/<?=$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom; ?>">
+                        <img  class="card-img"  src="annexes/photos/annonce_<?= $rowPhoto->an_id; ?>/<?=$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom; ?>">
                       </div>
                       <?php
                     }
@@ -54,7 +54,7 @@ include ("entete.php");
                     {
                       ?>
                       <div class="carousel-item">
-                        <img  class="card-img" alt="..." src="annexes/photos/annonce_<?= $rowPhoto->an_id; ?>/<?=$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom; ?>">
+                        <img  class="card-img"  src="annexes/photos/annonce_<?= $rowPhoto->an_id; ?>/<?=$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom; ?>">
                       </div>
                       <?php
                     }
@@ -120,6 +120,72 @@ include ("entete.php");
                         <div class="form-group">
                             <label for="total" class="form-label">Surface Total</label>
                             <input type="text" class="form-control" id="total" name="total" disabled placeholder="<?php echo $annonces->an_surf_tot?>">
+                        </div>
+                        <!-- options -->
+                        Option : <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" id="optionBouton" value="jardin" <?php if(isset($annonces->options) && ($annonces->options)== "1") echo "checked" ; ?>  >
+                            <label class="form-check-label" for="optionBouton">Jardin</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="garage" id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Garage</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Comble amenagement"<?php if(isset($annonces->options) && ($annonces->options)== "5") echo "checked" ;var_dump($annonces->options); ?> id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Comble aménagement</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Piscine" id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Piscine </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Cuisine ouverte " <?php if(isset($annonces->options) && ($annonces->options)== "6") echo "checked" ; ?> id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Cuisine ouverte </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Sans travaux " id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Sans travaux </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Avec travaux " id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Avec travaux </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Plein pied" id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Plein pied </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Cave" id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Cave  </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Ascenseur " id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Ascenseur  </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Terrasse/Balcon " id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Terrasse/Balcon </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Cheminé " id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Cheminé </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="optionBouton" value="Parking " id="optionBouton">
+                            <label class="form-check-label" for="optionBouton">Parking </label>
                         </div>
                         <!-- Prix -->
                         <div class="form-group">
