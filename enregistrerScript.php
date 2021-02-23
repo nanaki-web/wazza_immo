@@ -11,6 +11,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     $vEmail =htmlentities(trim($_POST['email']));
     $vMdp =htmlentities(trim($_POST['mdp']));
     $vMdpConfirmer =htmlentities(trim($_POST['mdpConfirmer']));
+    
     // $compte =  [];
     if(empty($vNom) || !preg_match('/^[a-zA-Z-]+$/',$vNom))
     {
@@ -68,24 +69,61 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
     } 
     else
     {
+       
         if(empty($errors))
         {
-            $pdoStat = $db -> prepare ("INSERT INTO utilisateurs (nom,prenom,email,motDePasse,confirmation_token,confirmation_date)
-                                        VALUES (?,?,?,?,?,CURDATE()");
+            
+            $pdoStat = $db -> prepare ("INSERT INTO utilisateurs (nom, prenom, email, motDePasse,confirmation_token)
+                                        VALUE (:nom, :prenom, :email,:motDePasse, :confirmation_token)");
             //hacher le mot de passe dans la base de donner
             $scriptageMdp = password_hash($vMdp,PASSWORD_BCRYPT);
             $token = str_random(60);
-            // debug($token);
+            // debug($token);// pour tester la fonction
             // die;
-            $pdoStat->execute(array($vNom,$vPrenom,$vEmail,$scriptageMdp,$token));
+
+            $pdoStat->bindValue(':nom',$vNom);
+            $pdoStat->bindValue(':prenom',$vPrenom);
+            $pdoStat->bindValue(':email',$vEmail);
+            $pdoStat->bindValue(':motDePasse',$scriptageMdp);
+            $pdoStat->bindValue(':confirmation_token',$token);
+
+
+            $pdoStat->execute();
+
             //nous renvoie le dernier id entrer
             $utilisateur_id = $db->lastInsertId();
+
+            //envoi du mail 
+
+            ob_start();
+            require 'mail.php';
+            $content = ob_get_clean();
+
+            // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+            mail($_POST['email'], ' Confirmation de votre compte', $content, $headers);
+            header('location:index.php');
+            exit();
+   
+
+
+            
+            
+            
+            
+            
+            
+            
+
+            
             // mail($email,'confirmation de votre compte',"enfin de valider votre compte,merci de cliquez sur ce lien\n\nhttp://wazaaimmo/enregistrerScript.php?id=$utilisateur_id&token=$token");
             // header('location:enregistrer.php');
-            // exit('Notre compte a bien été créé');
+            
             // session_start();
             // $compte['compte'] = 
-            die('Notre compte a bien été créé');
+            // die('Notre compte a bien été créé');
             // $_SESSION['compte'] = $compte;
            
             

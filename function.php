@@ -7,7 +7,7 @@ function debug($variable)
     echo '<pre>'.print_r($variable,true).'</pre>';
 }
 //donne une clé aléatoire de 60 caractere
-function str_random ($taille)
+function str_random ($taille)//repete l'alphabet $taille=60
 {
     $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
     return substr(str_shuffle(str_repeat($alphabet,$taille)),0,$taille);

@@ -23,7 +23,10 @@ function connexionBase()
     {    
         $db = new PDO('mysql:host=' .$host. ';charset=utf8;dbname=' .$base, $login, $password);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // echo "on est connecté";
+        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE ,PDO::FETCH_OBJ);
+
+        
+                
         //on s'assure d'envoyer les données en utf8
         // $db -> exec("SET NAMES UTF8");
         return $db;

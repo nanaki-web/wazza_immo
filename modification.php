@@ -18,14 +18,12 @@ if(isset($_GET['an_id']))
     $requete = "select * FROM annonces where an_id=".$an_id;
     $result = $db->query($requete);
     $annonces = $result->fetch(PDO::FETCH_OBJ);
-    var_dump($annonces);
+    
     $typeOffre = $annonces->an_offre;
 
-    //lecture table annonce_option
-    $req = "SELECT * FROM annonce_option WHERE an_id=".$an_id;
-    $resultOption = $db->query($req);
+
     
-    // $option = $resultOption->fetch(PDO::FETCH_OBJ);
+    // 
     // while($annonces = $result->fetch(PDO::FETCH_OBJ))
     // {
     //     $typeOffre = $annonces->an_offre;
@@ -152,72 +150,107 @@ Nombre de pièce(s) : <br>
         <input type="text" class="form-control" name="surfaceTotal" id="surfaceTotal" aria-describedby="" placeholder="Entrer la surface habitable en carré" value ="<?php echo $annonces->an_surf_tot ?>">
     </div>
 
+    <?php
+            //lecture table annonce_option
+   
+    $req = $db->prepare("SELECT opt_id 
+                        FROM annonce_option     
+                        WHERE an_id = :an_id") ;
+    $req->bindValue(':an_id',$an_id,PDO::PARAM_INT);
+    
+    $resultOption = $req->execute();
+    var_dump($resultOption);
+    $resultOption =$req->fetchAll();
+  
+    foreach ($resultOption as $data) 
+    {  
+        var_dump($array);       
+        if ( isset($data, $resultOption) )
+        {
+            $attr = ' checked' ;
+            var_dump($resultOption);
+        }
+        else 
+        {
+            $attr = '';        
+         
+        }
+        echo "<input type='checkbox' name='optionBouton[]' value='$data'$attr>$data<br>" . PHP_EOL ;
+    }
+   ?>
+    
+   
+
+    
+  
     <!-- options -->
     Option : <br>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" id="optionBouton" value="jardin">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" id="optionBouton" value="1">
         <label class="form-check-label" for="optionBouton">Jardin</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="garage" id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="2" id="optionBouton">
         <label class="form-check-label" for="optionBouton">Garage</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Comble amenagement" id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="5<?php $data;$attr ?> > <?php $data ?> " id="optionBouton"> 
         <label class="form-check-label" for="optionBouton">Comble aménagement</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Piscine" id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" id="optionBouton" value="4"<?php if(isset($rowOption['opt_id']) && ($rowOption['opt_id'])== "4") echo "checked" ;?> id="optionBouton">
         <label class="form-check-label" for="optionBouton">Piscine </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Cuisine ouverte " <?php if(isset($resultOption->opt_id) && ($resultOption->opt_id)== "6") echo "checked" ;var_dump($annonce_option->opt_id); ?> id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton" value="6<?php if(isset($rowOption['opt_id']) && ($rowOption['opt_id'])== "6") echo "checked";?> "  id="optionBouton">
         <label class="form-check-label" for="optionBouton">Cuisine ouverte </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Sans travaux " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="7 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Sans travaux </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Avec travaux " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="8 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Avec travaux </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Plein pied" id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="10" id="optionBouton">
         <label class="form-check-label" for="optionBouton">Plein pied </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Cave" id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="9" id="optionBouton">
         <label class="form-check-label" for="optionBouton">Cave  </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Ascenseur " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="11 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Ascenseur  </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Terrasse/Balcon " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="12 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Terrasse/Balcon </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Cheminé " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="13 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Cheminé </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="Parking " id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="3 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Parking </label>
     </div>
+
+
 
 <!-- Prix -->
 
