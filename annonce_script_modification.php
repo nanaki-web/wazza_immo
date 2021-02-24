@@ -2,26 +2,51 @@
 require('connexion_bdd.php');
 // require('annexes\original\redimensionner.php');
 $db = connexionBase();
+if ( !empty($_POST['id'])) 
+{ 
+    $id = $_REQUEST['id']; 
+    // var_dump($id);
+} 
 
-// // declaration des variables
-$typeOffre = $_POST["typeOffre"];
-$nbreP = $_POST["nbreP"];
-$reference = $_POST["reference"];
-$titre = $_POST["titre"];
-$description = $_POST["description"];
-$localisation = $_POST["localisation"];
-$surfaceHabitable = $_POST["surfaceHabitable"];
-$surfaceTotal = $_POST["surfaceTotal"];
-$prix = $_POST["prix"];
-$diagnosticBouton = $_POST["diagnosticBouton"];
-$photo = $_POST["photo"];
-$dateAjout = $_POST["dateAjout"];
-$id = $_POST['identifiantId'];
-$pdoStat = $objetPDO -> prepare('SELECT * FROM annonces where id = :an_id ');
+ // declaration des variables
+$typeOffre = htmlentities(trim($_POST['typeOffre']));
+$nbreP = htmlentities(trim($_POST['nbreP'])) ;
+$reference = htmlentities(trim($_POST['reference'])) ;
+$titre = htmlentities(trim($_POST['titre'])) ;
+$description = htmlentities(trim($_POST['description'])) ;
+$localisation = htmlentities(trim($_POST['localisation'])) ;
+$surfaceHabitable = htmlentities(trim($_POST['surfaceHabitable'])) ;
+$surfaceTotal = htmlentities(trim($_POST['surfaceTotal'])) ;
+$option = htmlentities(trim($_POST['optionBouton']));
+$prix = htmlentities(trim($_POST['prix'])) ;
+$diagnosticBouton = htmlentities(trim($_POST['diagnosticBouton'])) ;
+$photo = htmlentities(trim($_POST['photo']));
 
-$pdoStat ->bindValue(' :id', $id, PDO::PARAM_INT);
+// *************************      requete annonce *******************************************************
+$requete = $db->prepare("UPDATE annonces SET typeOffre= :typeOffre, nbreP = :nbreP, reference = :reference,
+                                        titre = :titre, description = :description, localisation = :localisation,
+                                        surfaceHabitable = :surfaceHabitable, surfaceTotal = :surfaceTotal ,
+                                        prix = :prix, diagnosticBouton = :diagnosticBouton   ");
+$requete->bindValue(':typeOffre',$typeOffre);
+$requete->bindValue(':typeBien',$typeBien,PDO::PARAM_INT);
+$requete->bindValue(':nbrePiece',$nbrePiece,PDO::PARAM_INT);    
+$requete->bindValue(':reference',$reference);
+$requete->bindValue(':titre',$titre);                          
+$requete->bindValue(':description',$description);
+$requete->bindValue(':localisation',$localisation);                     
+$requete->bindValue(':surfaceHabitable',$surfaceHabitable,PDO::PARAM_INT);
+$requete->bindValue(':surfaceTotal',$surfaceTotal,PDO::PARAM_INT);
+$requete->bindValue(':prix',$prix,PDO::PARAM_INT);
+$requete->bindValue(':diagnosticBouton',$diagnosticBouton);
 
-$executeIsOk = $pdoStat ->execute();
+$requete->execute();
+$requete->closeCursor();
+
+
+
+
+
+
 
 
 

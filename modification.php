@@ -153,38 +153,45 @@ Nombre de pièce(s) : <br>
     <?php
             //lecture table annonce_option
    
-    $req = $db->prepare("SELECT opt_id 
-                        FROM annonce_option     
+    $req = $db->prepare("SELECT annonce_option.opt_id ,options.opt_libelle
+                        FROM annonce_option  
+                        JOIN options
+                        ON annonce_option.opt_id = options.opt_id   
                         WHERE an_id = :an_id") ;
     $req->bindValue(':an_id',$an_id,PDO::PARAM_INT);
     
+    
     $resultOption = $req->execute();
-    var_dump($resultOption);
+   
     $resultOption =$req->fetchAll();
-  
+
+    $req = $db->prepare("SELECT options.opt_libelle
+                        FROM options "
+    );
+    $result = $req -> execute();
+
+    $opt_ids = [];
     foreach ($resultOption as $data) 
     {  
-        var_dump($array);       
-        if ( isset($data, $resultOption) )
-        {
-            $attr = ' checked' ;
-            var_dump($resultOption);
-        }
-        else 
-        {
-            $attr = '';        
-         
-        }
-        echo "<input type='checkbox' name='optionBouton[]' value='$data'$attr>$data<br>" . PHP_EOL ;
+        //opt_libelle de mon objet $data
+        $opt_ids[$data->opt_libelle] = $data->opt_id;
+        
     }
+    echo "Option : <br>";
+    while($result = $req ->fetch(PDO::FETCH_OBJ))
+    {
+    ?>
+        <div class="form-check form-check-inline">                                                              <?php // est ce que (isset) je trouve $result->opt_libelle dans mon tableau $opt_ids  ?>
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" id="optionBouton" value=""<?php if (isset($opt_ids[$result->opt_libelle])) echo "checked"; ?>>
+        <label class="form-check-label" for="optionBouton"><?php echo $result->opt_libelle; ?></label>
+        </div> 
+    <?php
+    }
+    
    ?>
     
-   
-
-    
-  
     <!-- options -->
-    Option : <br>
+    <!-- Option : <br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="checkbox" name="optionBouton[]" id="optionBouton" value="1">
         <label class="form-check-label" for="optionBouton">Jardin</label>
@@ -195,8 +202,8 @@ Nombre de pièce(s) : <br>
         <label class="form-check-label" for="optionBouton">Garage</label>
     </div>
 
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="5<?php $data;$attr ?> > <?php $data ?> " id="optionBouton"> 
+    <div class="form-check form-check-inline">                 <?php // est ce que (isset) je trouve combles aménageables dans mon tableau $opt_ids  ?>
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="5"<?php if (isset($opt_ids['Combles aménageables'])) echo "checked"; ?>    id="optionBouton"> 
         <label class="form-check-label" for="optionBouton">Comble aménagement</label>
     </div>
 
@@ -206,7 +213,7 @@ Nombre de pièce(s) : <br>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="optionBouton" value="6<?php if(isset($rowOption['opt_id']) && ($rowOption['opt_id'])== "6") echo "checked";?> "  id="optionBouton">
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" value="6<?php if(isset($rowOption['opt_id']) && ($rowOption['opt_id'])== "6") echo "checked";?> "  id="optionBouton">
         <label class="form-check-label" for="optionBouton">Cuisine ouverte </label>
     </div>
 
@@ -248,9 +255,7 @@ Nombre de pièce(s) : <br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="checkbox" name="optionBouton[]" value="3 " id="optionBouton">
         <label class="form-check-label" for="optionBouton">Parking </label>
-    </div>
-
-
+    </div> -->
 
 <!-- Prix -->
 

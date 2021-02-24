@@ -148,7 +148,8 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
       
         if(!empty($errors))
         {
-        
+                //dans le tableau $_session , dans ce tableau je rajoute une ligne qui portera l'indice errors 
+                // dans cette ligne ,je met la valeur de $errors .
                 $_SESSION['errors']= $errors;
 
                 header("Location: annonce_ajout.php");
