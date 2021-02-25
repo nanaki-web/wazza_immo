@@ -28,9 +28,10 @@ SET time_zone = "+00:00";
 -- Structure de la table `annonces`
 --
 
-DROP TABLE IF EXISTS `annonces`;
-CREATE TABLE IF NOT EXISTS `annonces` (
-  `an_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identifiant / Clé primaire',
+DROP TABLE IF EXISTS annonces;
+CREATE TABLE IF NOT EXISTS annonces 
+(
+  `an_id` int (10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identifiant / Clé primaire',
   `an_offre` char(1) NOT NULL COMMENT 'Type d''offre. Lettres A, L ou V.',
   `an_type` tinyint(3) UNSIGNED NOT NULL COMMENT 'Type de bien',
   `an_pieces` tinyint(3) UNSIGNED DEFAULT NULL COMMENT 'Nombre de pièces (facultatif)',

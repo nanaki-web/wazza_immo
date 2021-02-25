@@ -272,8 +272,6 @@ Nombre de pièce(s) : <br>
         <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
         <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
         <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
-
-        
     </div>
 
     <!-- Date d’ajout -->

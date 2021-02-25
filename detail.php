@@ -2,7 +2,7 @@
 require('connexion_bdd.php');
 $db = connexionBase();
 $an_id = $_GET["an_id"];
-var_dump($an_id);
+
 
 include ("entete.php");
 ?>

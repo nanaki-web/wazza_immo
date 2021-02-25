@@ -194,7 +194,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
 //************************requete pour les options ********************************************************************* */
 
 
-                       //pour chaque objet $new dans la variable option
+                       //pour chaque objet $newValueOption dans la variable option
                         foreach($option as $newValueOption)
                         {//prepare la requete d'insertion
                                 $requete = $db->prepare("INSERT INTO annonce_option (an_id,opt_id) VALUES (:an_id, :opt_id)");

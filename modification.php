@@ -15,9 +15,13 @@ if(isset($_GET['an_id']))
 <!-- ***********************************************requete******************************************************************************************** -->
     <?php
     //requete lecture table annonce
-    $requete = "select * FROM annonces where an_id=".$an_id;
+    $requete = "select * 
+                FROM annonces 
+                where an_id=".$an_id;
     $result = $db->query($requete);
     $annonces = $result->fetch(PDO::FETCH_OBJ);
+    var_dump($annonces->an_diagnostic);
+    var_dump($an_id);
     
     $typeOffre = $annonces->an_offre;
 
@@ -69,47 +73,56 @@ if(isset($_GET['an_id']))
             <input class="form-check-input" type="radio" name="typeOffre" id="typeOffre" value="V" <?php if(isset($typeOffre) && $typeOffre == "V") echo "checked" ; ?> >
         </div>
     </div>
+    <div>
+        <label for ="typeBien" >Type de bien : </label>
+        <select class="form-select" aria-label="Default select example" id="typeBien" name="typeBien" >
+            <option selected value="0">Open this select menu</option>
+            <option  value="1" <?php if(isset($annonces->an_type) && $annonces->an_type == "1") echo "selected" ;?> >Maison</option>
+            <option  value="2"<?php if(isset($annonces->an_type) && $annonces->an_type == "2") echo "selected" ;?> >Appartement</option>
+            <option  value="3"<?php if(isset($annonces->an_type) && $annonces->an_type == "3") echo "selected" ;?> >Immeuble</option>
+        </select>
+    </div>
 
 <!-- nombre de piece -->
 Nombre de pièce(s) : <br>
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="1" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "1") echo "checked" ;?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="1" <?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "1") echo "checked" ;?> >
         <label class="form-check-label" for="nbreP">1</label>
         
     </div>
 
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="2" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "2") echo "checked" ; ?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="2" <?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "2") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">2</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="3" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "3") echo "checked" ; ?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="3" <?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "3") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">3</label>
         
     </div>
 
     <div class="form-check form-check-inline ">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="4" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "4") echo "checked" ; ?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="4" <?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "4") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">4</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="5" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "5") echo "checked" ; ?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="5" <?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "5") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">5</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="6"<?php if(isset($annonces->an_type) && ($annonces->an_type)== "6") echo "checked" ; ?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="6"<?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "6") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">6</label>
         
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="+6" <?php if(isset($annonces->an_type) && ($annonces->an_type)== "+6") echo "checked" ; ?> >
+        <input class="form-check-input" type="checkbox" id="nbreP" name= "nbreP" value="+6" <?php if(isset($annonces->an_pieces) && ($annonces->an_pieces)== "+6") echo "checked" ; ?> >
         <label class="form-check-label" for="nbreP">+6</label>
         
     </div>
@@ -259,61 +272,67 @@ Nombre de pièce(s) : <br>
 
 <!-- Prix -->
 
+
     <div class="form-group">
         <label for="prix">Prix</label>
         <input type="text" class="form-control" id="prix" name="prix" aria-describedby="" placeholder="Entrer votre prix" value ="<?php echo $annonces->an_prix ?>">
     </div>
     <!-- Diagnostic -->
+  
+
     Diagnotic : <br>
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="A" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "A") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="A" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "A") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">A</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="B" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "B") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="B" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "B") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">B </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="C" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "C") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="C" <?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "C") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">C </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="D"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "D") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="D"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "D") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">D </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="E"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "E") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="E"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "E") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">E</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="F"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "F") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="F"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "F") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">F</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="G"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "G") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="G"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "G") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">G</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="diagnosticBouton[]" value="vierge"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "V") echo "checked" ; ?> id="diagnosticBouton">
+        <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="vierge"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "V") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">Vierge </label>
     </div>
 
     <!-- photos -->
     
+    
     <div class="form-group">
         <label for="photo"> Téléchargement de la /des photo(s) :</label>
-        <input type="file" name ="photo" class="form-control-file" id="photo">
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
     </div>
 
     <!-- bouton submit -->
-    <input class="btn btn-primary" id = " idEnvoyer " type="submit" value="enregistrer">
+    <input class="btn btn-primary" id = " idEnvoyer " type="submit" value="Modifier">
     <a class="btn" href="detail.php?an_id=<?=$annonces ->an_id?>">Retour</a>
 </form> 
 <br>
