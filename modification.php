@@ -3,6 +3,7 @@ require 'connexion_bdd.php';
 $db = connexionBase();
 include("entete.php");
 $an_id = $_GET["an_id"];
+var_dump($_POST);
 ?>
 <!-- construction de la requête -->
 
@@ -20,25 +21,8 @@ if(isset($_GET['an_id']))
                 where an_id=".$an_id;
     $result = $db->query($requete);
     $annonces = $result->fetch(PDO::FETCH_OBJ);
-    var_dump($annonces->an_diagnostic);
-    var_dump($an_id);
     
     $typeOffre = $annonces->an_offre;
-
-
-    
-    // 
-    // while($annonces = $result->fetch(PDO::FETCH_OBJ))
-    // {
-    //     $typeOffre = $annonces->an_offre;
-    //     $req = $db -> prepare("SELECT * FROM annonces WHERE an_id= :an_id");
-    //     $req-> bindValue(':an_id',$annonces->an_id,PDO::PARAM_INT);               
-    //     $resultOption = $req->execute();
-        
-    //     $rowOption = $req->fetch(PDO::FETCH_OBJ);
-    //     var_dump($rowOption);
-    // }
-    
 
 
    //lecture table photos
@@ -178,7 +162,7 @@ Nombre de pièce(s) : <br>
    
     $resultOption =$req->fetchAll();
 
-    $req = $db->prepare("SELECT options.opt_libelle
+    $req = $db->prepare("SELECT options.opt_id,options.opt_libelle
                         FROM options "
     );
     $result = $req -> execute();
@@ -195,7 +179,7 @@ Nombre de pièce(s) : <br>
     {
     ?>
         <div class="form-check form-check-inline">                                                              <?php // est ce que (isset) je trouve $result->opt_libelle dans mon tableau $opt_ids  ?>
-        <input class="form-check-input" type="checkbox" name="optionBouton[]" id="optionBouton" value=""<?php if (isset($opt_ids[$result->opt_libelle])) echo "checked"; ?>>
+        <input class="form-check-input" type="checkbox" name="optionBouton[]" id="optionBouton" value="<?php echo $result->opt_id;    ?>"<?php if (isset($opt_ids[$result->opt_libelle])) echo "checked"; ?>>
         <label class="form-check-label" for="optionBouton"><?php echo $result->opt_libelle; ?></label>
         </div> 
     <?php

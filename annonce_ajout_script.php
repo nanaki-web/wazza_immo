@@ -224,7 +224,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                                 {
                                         $tmp_name = $_FILES["fichier"]["tmp_name"][$key];
                                     // basename() peut empêcher les attaques "filesystem traversal";
-                                    // une autre validation/néttoyage du nom de fichier peux être appropriée
+                        
         
                                         $name = basename($_FILES["fichier"]["name"][$key]);
                                         if($mk)

@@ -7,7 +7,7 @@ $db = connexionBase();
 if ( !empty($_POST['id'])) 
 { 
     $id = $_REQUEST['id']; 
-    // var_dump($id);
+    // var_dump($_REQUEST['id']);
 } 
 
  // declaration des variables
@@ -21,6 +21,7 @@ $localisation = htmlentities(trim($_POST['localisation'])) ;
 $surfaceHabitable = htmlentities(trim($_POST['surfaceHabitable'])) ;
 $surfaceTotal = htmlentities(trim($_POST['surfaceTotal'])) ;
 $option = $_POST['optionBouton'];
+
 $prix = htmlentities(trim($_POST['prix'])) ;
 $diagnosticBouton = $_POST['diagnosticBouton'];
 // $photo = htmlentities(trim($_POST['photo']));
@@ -46,9 +47,32 @@ $requete->bindValue(':id',$id,PDO::PARAM_INT);
 $requete->execute();
 
 // *************** requete update pour les options*********************************************************************
-$requete = $db->prepare("UPDATE annonce_option")
-$requete->closeCursor();
 
+//on efface toute les checkbox coché au préalable
+$requete = $db->prepare("DELETE FROM annonce_option WHERE an_id = :an_id");
+$requete->bindValue(':an_id',$id,PDO::PARAM_INT);
+$requete->execute();
+
+//ensuite ,dans une bouble , on parcourt le tableau $option . et A chaque tour de boucle ,on met un element dans $opt.
+foreach($option as $opt)
+{
+    
+    $requete = $db->prepare("INSERT INTO annonce_option (an_id,opt_id) VALUES (:an_id, :opt_id)");//on prepare la requete
+    $requete->bindValue(':an_id',$id,PDO::PARAM_INT);//on attribue les marqueurs
+    $requete->bindValue(':opt_id',$opt,PDO::PARAM_INT);
+    $requete->execute();//on execute
+
+}
+
+
+
+$requete->closeCursor();//on ferme la bdd
+//redirection vers la page index.php
+// trouver un moyen d'envoi les données sur modification . 
+
+header("Location: modification.php?an_id=$id");//probleme 
+
+// ************************* photo************************************************************************************
 
 
 
