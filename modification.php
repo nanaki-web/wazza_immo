@@ -3,7 +3,7 @@ require 'connexion_bdd.php';
 $db = connexionBase();
 include("entete.php");
 $an_id = $_GET["an_id"];
-var_dump($_POST);
+// var_dump($_POST);
 ?>
 <!-- construction de la requête -->
 
@@ -306,7 +306,41 @@ Nombre de pièce(s) : <br>
     </div>
 
     <!-- photos -->
+
+    <br>
     
+    <?php
+        $request = $db ->prepare("select pho_nom FROM photo where an_id = :an_id");
+        $request -> bindValue(':an_id',$an_id,PDO::PARAM_INT);
+        
+    
+        $resultPhoto = $request -> execute();
+        
+    
+        while($rowPhoto = $request->fetch(PDO::FETCH_OBJ))
+        {
+            if(isset($rowPhoto->pho_nom))
+            {
+            
+        ?>
+                <img name="image"  src="annexes/photos/annonce_<?=$an_id."/".$rowPhoto->pho_nom; ?> " alt="<?=$rowPhoto->pho_nom?>" width="400" height="341">
+        <?php
+            }
+            else 
+            {
+            ?>
+                    <img  src="annexes/photos/photoDefaut/defaut.jpg "  alt="defaut.jpg">
+
+            <?php
+            }
+        
+
+
+        }
+        ?>
+        
+
+
     
     <div class="form-group">
         <label for="photo"> Téléchargement de la /des photo(s) :</label>

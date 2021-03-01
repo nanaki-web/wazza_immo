@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 require 'connexion_bdd.php';
 $db = connexionBase();
 include ('entete.php');
@@ -120,5 +120,5 @@ $result->closeCursor();
 </div>
 </br>
 <?php
-include ('entete.php');
+include ('pieddepage.php');
 ?>

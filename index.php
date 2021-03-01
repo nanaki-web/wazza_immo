@@ -26,12 +26,28 @@ include ("entete.php");
         $resultPhoto = $request -> execute();
         // $resultPhoto = $db->query($request);
         $rowPhoto = $request->fetch(PDO::FETCH_OBJ);
+        
         // var_dump($rowPhoto);
         ?>
         <div class="col-12 col-md-6 col-lg-4 col-xl-3 my-2">
             <div class="card" >
-        
-                <img class="card-img-top" src="annexes/photos/annonce_<?=$annonces->an_id."/".$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom?>">
+            <?php
+                if(isset($rowPhoto->pho_nom))
+                {
+                    
+                ?>
+                    <img class="card-img-top" src="annexes/photos/annonce_<?=$annonces->an_id."/".$rowPhoto->pho_nom; ?>" width="20rem" height="350px"  alt="<?=$rowPhoto->pho_nom?>">
+                <?php
+                }
+                else 
+                {
+                ?>
+                    <img class="card-img-top" src="annexes/photos/photoDefaut/defaut.jpg " width="20rem" height="350px" alt="defaut.jpg">
+
+                <?php
+                }
+                ?>
+                
                 
 
                 <div class="card-body">
