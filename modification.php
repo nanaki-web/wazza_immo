@@ -4,17 +4,18 @@ $db = connexionBase();
 include("entete.php");
 $an_id = $_GET["an_id"];
 // var_dump($_POST);
-?>
-<!-- construction de la requête -->
 
-<?php
+
+// construction de la requête -->
+
+
 if(isset($_GET['an_id']))
 {
     $an_id=$_GET['an_id'];//récupération de l'identifiant envoyé en méthode Get --> dans l'URL
 }
-?>
-<!-- ***********************************************requete******************************************************************************************** -->
-    <?php
+
+ //***********************************************requete******************************************************************************************** -->
+    
     //requete lecture table annonce
     $requete = "select * 
                 FROM annonces 
@@ -37,7 +38,7 @@ if(isset($_GET['an_id']))
 </div>
 <!-- *************************************************formulaire******************************************************************* -->
 
-<form action = "annonce_script_modification" method = "post"  enctype="multipart/form-data" >
+<form action = "annonce_script_modification" method = "POST" name="formulaire1"  enctype="multipart/form-data"  >
     <div class="form-group">
     <input type="text" name="id" class="form-control" hidden value="<?php echo $annonces->an_id ?>"  >
     Type d'offre : <br>
@@ -304,56 +305,81 @@ Nombre de pièce(s) : <br>
         <input class="form-check-input" type="checkbox" name="diagnosticBouton" value="vierge"<?php if(isset($annonces->an_diagnostic) && ($annonces->an_diagnostic)== "V") echo "checked" ; ?> id="diagnosticBouton">
         <label class="form-check-label" for="diagnosticBouton">Vierge </label>
     </div>
-
-    <!-- photos -->
-
-    <br>
-    
-    <?php
-        $request = $db ->prepare("select pho_nom FROM photo where an_id = :an_id");
-        $request -> bindValue(':an_id',$an_id,PDO::PARAM_INT);
-        
-    
-        $resultPhoto = $request -> execute();
-        
-    
-        while($rowPhoto = $request->fetch(PDO::FETCH_OBJ))
-        {
-            if(isset($rowPhoto->pho_nom))
-            {
-            
-        ?>
-                <img name="image"  src="annexes/photos/annonce_<?=$an_id."/".$rowPhoto->pho_nom; ?> " alt="<?=$rowPhoto->pho_nom?>" width="400" height="341">
-        <?php
-            }
-            else 
-            {
-            ?>
-                    <img  src="annexes/photos/photoDefaut/defaut.jpg "  alt="defaut.jpg">
-
-            <?php
-            }
-        
-
-
-        }
-        ?>
-        
-
-
-    
+    <!-- Code pour limiter la taille du fichier Sélectionnez -->
+    <input type="hidden" name="MAX_FILE_SIZE" value="100000">
     <div class="form-group">
         <label for="photo"> Téléchargement de la /des photo(s) :</label>
-        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
-        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
-        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" >
+        <input type="file"  id="photoID" class="form-control-file" name="fichier[]" multiple >
     </div>
+    <!--*******************************        bouton submit du formulaire 1*******************************************  -->
+    <br>
+    <input class="btn btn-primary" id = " idModifier " type="submit" name="submit1" value="Modifier">
+    <a class="btn" href="detail.php?an_id=<?=$annonces->an_id?>">Retour</a>
+   
+</form>
 
-    <!-- bouton submit -->
-    <input class="btn btn-primary" id = " idEnvoyer " type="submit" value="Modifier">
-    <a class="btn" href="detail.php?an_id=<?=$annonces ->an_id?>">Retour</a>
-</form> 
-<br>
+    <!-- **********************photos******************************************************************************* -->
+
+
+
+        <form method="POST" action="photoSupprimer.php"name="formulaire2"  enctype="multipart/form-data" >
+            <?php
+        
+            
+            // affichage des images
+            $request = $db->prepare("SELECT pho_nom, pho_id, an_id FROM photo where an_id = :an_id");
+            $request->bindValue(':an_id',$an_id,PDO::PARAM_INT);
+            $resultPhoto = $request->execute();
+            ?>      
+            <input type="text" name="an_id" class="form-control" hidden value="<?php echo $an_id; ?>"  >
+            <?php
+            
+            while($rowPhoto = $request->fetch(PDO::FETCH_OBJ))
+            {
+                
+                if(isset($rowPhoto->pho_id))
+                {
+                    
+                    ?>
+                        
+                        <img name="image"  src="annexes/photos/annonce_<?=$an_id."/".$rowPhoto->pho_nom; ?> " alt="<?=$rowPhoto->pho_id?>" width="380" height="341">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="photo[]" value="<?=$rowPhoto->pho_id?>" id="optionBouton">
+                            <label class="form-check-label" for="optionBouton"><?=$rowPhoto->pho_nom?> </label>
+                        </div>
+                    <?php
+                
+                }
+                else 
+                {
+                ?>
+                        <img  src="annexes/photos/photoDefaut/defaut.jpg "  alt="defaut.jpg">
+
+                <?php
+                    }
+                    
+            }
+            
+        ?>
+        <br>
+    
+            <br>
+            
+
+            <input class="btn btn-primary" id = " idEnvoyer " type="submit" name="submit2" value="supprimer">
+            <a class="btn" href="detail.php?an_id=<?=$annonces ->an_id?>">Retour</a>
+    </form>
+        <br>
+
+    
+    
+  
+
+
+
+    
+    
+ 
 <?php
     include("pieddepage.php");
 

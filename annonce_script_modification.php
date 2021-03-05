@@ -63,16 +63,65 @@ foreach($option as $opt)
     $requete->execute();//on execute
 
 }
+// *************************************   photo  *****************************************************************
+// $requete = $db ->prepare("DELETE FROM photo WHERE an_id = :an_id");
+// $requete->bindValue(':an_id',$id,PDO::PARAM_INT);
+// $requete->execute();
 
 
+        //telecharger les images
+        $fichier = $_FILES['fichier'];
+        //lecture de table photo
+        $photoLecture = $db->prepare("SELECT count(pho_id)as nbre FROM photo WHERE an_id= :an_id");
+        $photoLecture->bindValue(':an_id',$id,PDO::PARAM_INT);
+        $photoLecture->execute();
+        $rowLecture = $photoLecture->fetch(PDO::FETCH_OBJ);
+        //je recupere le resultat de l'alias +1 pour compter le nombre de photo
+        $numeroPhoto = $rowLecture->nbre + 1 ;
+        // var_dump($rowLecture);
+        // var_dump($rowLecture->nbre);
+        // var_dump($numeroPhoto);
+        
+
+                                                         //boucle sur [$_files ][name] et elle recupere la clé et sa valeur 
+                        foreach ($_FILES["fichier"]["name"] as $key => $value) 
+                        {
+                            
+                                
+                                $extension = pathinfo($value, PATHINFO_EXTENSION);
+                                // var_dump($value);
+                                if ($value ) 
+                                {
+                                        $tmp_name = $_FILES["fichier"]["tmp_name"][$key];
+
+                                        // basename() peut empêcher les attaques "filesystem traversal";
+                                        
+                                        $name = basename($_FILES["fichier"]["name"][$key]);
+                                                                    
+                                                $move = move_uploaded_file($_FILES["fichier"]["tmp_name"][$key],"annexes/photos/annonce_".$id."/".$id. "-" .$numeroPhoto.".".$extension);
+                                                $photo = $db -> prepare("INSERT INTO photo (pho_nom, an_id) VALUE (:pho_nom, :an_id)");
+                                                $photo->execute([
+                                                        ':pho_nom' => $id. "-" .$numeroPhoto,
+                                                        ':an_id' => (int) $id
+                                                ]);
+                                                $numeroPhoto++;
+                                }
+
+                        }    
+
+                        // if (isset($_POST['idToDelete'])) {
+                        //     $idToDelete = $_POST['idToDelete'];
+                        //     if()
+                        //     {
+
+                        //     }
+                        // }
 
 $requete->closeCursor();//on ferme la bdd
-//redirection vers la page index.php
-// trouver un moyen d'envoi les données sur modification . 
 
-header("Location: modification.php?an_id=$id");//probleme 
-
-// ************************* photo************************************************************************************
+header("Location: modification.php?an_id=$id");//revois sur modification.php l'id de l'annonce
+?>
+ <!-- ************************* photo************************************************************************************ -->
 
 
 

@@ -9,12 +9,12 @@ if(array_key_exists('errors',$_SESSION)):?>
   </div>
 <?php unset($_SESSION['errors']); endif;?>
 
-<!-- **********************************************Barre ajout annonce*********************************************************************** -->
+<!-- **********************************************Barre ajout annonce***********************************************-->
 <div class="row shadow mt-3 mb-3 mx-0 p-3 rounded bg-dark">
   <div class="col-md-2 text white-50 text-right"></div>
   <div class="col-md-8 h2 text-white-50 text-center">Ajouter une annonce</div>
 </div>
-<!-- *************************************************formulaire******************************************************************* -->
+<!-- *************************************************formulaire*****************************************************-->
 
 <form action = "annonce_ajout_script" method = "post"  enctype="multipart/form-data" >
     <div class="form-group">

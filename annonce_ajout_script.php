@@ -29,14 +29,14 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
         if(empty($typeOffre))
         {
                 $errors['typeOffre'] = "Veuillez cocher un type d'offre";
-                var_dump($errors['typeOffre']);
+                // var_dump($errors['typeOffre']);
                 $valid = false;
         }
 
         if($typeBien == 0)
         {
                 $errors['typeBien'] = "Veuillez choisir un type de bien ";
-                var_dump($errors['typeBien']);
+                // var_dump($errors['typeBien']);
                 $valid = false;
         }
         if(empty($nbrePiece))
@@ -214,8 +214,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && !empty($_POST))
                         $fichier = $_FILES['fichier'];
                         $mk = mkdir("annexes/photos/annonce_".$an_id);
 
-                        var_dump($fichier);
-                        //boucle sur [$_files ][name] et elle recupere la clé et sa valeur 
+                                                //boucle sur [$_files ][name] et elle recupere la clé et sa valeur 
                         foreach ($_FILES["fichier"]["name"] as $key => $value) 
                         {
                                 $extension = pathinfo($value, PATHINFO_EXTENSION);
