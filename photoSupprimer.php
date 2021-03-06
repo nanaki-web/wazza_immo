@@ -33,22 +33,53 @@ while($rowPhoto = $request->fetch(PDO::FETCH_OBJ))
         $request->bindValue(':pho_id',$rowPhoto->pho_id, PDO::PARAM_INT);
         $resultDelete = $request->execute();
         
-        // On met les types autorisés dans un tableau (ici pour une image)
-        // $aMimeTypes = array( "image/jpeg", "image/png", "image/x-png");
+        
         
 
         
+        
+
         // var_dump($extension);
-        if (in_array($extension, $aMimeTypes))
-        {
-            if(file_exists ($fichier))
-            {
-                unlink($fichier);
-            }
-        }
+    //     if (in_array($extension, $aMimeTypes))
+    //     {
+    //         if(file_exists ($fichier))
+    //         {
+    //             unlink($fichier);
+    //         }
+    //     }
+
+    // }
 
     }
 
 }
+
+suppression("annexes/annonce_".$an_id , "jpg");
+$dossier_traite = "annexes/annonce_".$an_id;
+
+function suppression($dossier_traite , $extension_choisie)
+{
+    $repertoire =opendir($dossier_traite); //On définit le répertoire dans lequel on souhaite travailler.
+    //!==Cet opérateur permet non seulement de comparer la valeur de retour à false (cas d'échec de la fonction readdir) mais aussi les types.
+    while (false !== ($fichier = readdir($repertoire))) // On lit chaque fichier du répertoire dans la boucle.
+    {// On lance notre boucle qui lira les fichiers un par un.
+       $chemin = $dossier_traite."/".$fichier; // On définit le chemin du fichier à effacer.
+        // Les variables qui contiennent toutes les infos nécessaires.
+        $infos = pathinfo($chemin);
+        $extension = $infos['extension'];
+        var_dump($extension);
+        //si le fichier n'est pas un repertoire
+        if ($fichier != ".." AND $fichier != "." AND !is_dir($fichier) AND $extension == $extension_choisie)
+        {
+        unlink($chemin); // On efface.
+        }
+
+    }
+    closedir($repertoire); // On ferme !// Ne pas oublier de fermer le dossier ***EN DEHORS de la boucle*** ! Ce qui évitera à PHP beaucoup de calculs et des problèmes liés à l'ouverture du dossier
+
+
+
+
+
 header("Location: modification.php?an_id=$an_id");//revois sur modification.php l'id de l'annonce
 
