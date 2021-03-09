@@ -339,6 +339,7 @@ Nombre de pièce(s) : <br>
                 
                 if(isset($rowPhoto->pho_id))
                 {
+                    // var_dump($rowPhoto);
                     
                     ?>
                         
